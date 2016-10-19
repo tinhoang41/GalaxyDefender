@@ -33,7 +33,8 @@ public class CircleMover : GameObjectMover {
     protected override void UpdateVelocity()
     {
         _velocity = pReachVerticalBoundary ? Vector3.Scale(_velocity, new Vector3(1,-1,1)) : pReachHorizontalBoundary ? Vector3.Scale(_velocity, new Vector3(-1, 1, 1)) : _velocity;
-    }
+		base.UpdateVelocity ();
+	}
 
     public void Initialize(Vector3 direction)
     {

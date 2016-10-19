@@ -51,7 +51,8 @@ public class BulletMover : GameObjectMover
 
     protected override void UpdateVelocity()
     {
-        _velocity = transform.rotation * Vector3.up;//pReachVerticalBoundary ? Vector3.Scale(_velocity, new Vector3(1, -1, 1)) : pReachHorizontalBoundary ? Vector3.Scale(_velocity, new Vector3(-1, 1, 1)) : _velocity;
+        _velocity = transform.rotation * Vector3.up;
+		base.UpdateVelocity();//pReachVerticalBoundary ? Vector3.Scale(_velocity, new Vector3(1, -1, 1)) : pReachHorizontalBoundary ? Vector3.Scale(_velocity, new Vector3(-1, 1, 1)) : _velocity;
     }
 
 }

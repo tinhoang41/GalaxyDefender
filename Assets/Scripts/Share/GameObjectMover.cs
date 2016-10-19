@@ -5,7 +5,7 @@ using System.Collections;
 public class GameObjectMover : MonoBehaviour {
 
     public      float       acceleration;
-    public      float       minSpeed;
+    public      float       initialSpeed;
     public      float       maxSpeed;
     public      float       rotatingSpeed;
 
@@ -19,7 +19,7 @@ public class GameObjectMover : MonoBehaviour {
 
     public virtual void Start()
     {
-        _currentSpeed      = minSpeed;
+		_currentSpeed      = initialSpeed;
         _boundary          = SetUpBounds();
         _velocity          = Vector3.zero;
         _directionToRotate = transform.rotation;
@@ -34,13 +34,15 @@ public class GameObjectMover : MonoBehaviour {
     }
 
     #region Translation related updates
-    protected virtual void UpdateVelocity(){}
+    protected virtual void UpdateVelocity()
+	{
+		_currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
+		_velocity.Normalize();
+	}
 
     protected virtual void Moving()
     {
         UpdateVelocity();
-        _currentSpeed = Mathf.Min(maxSpeed, _currentSpeed + acceleration * Time.deltaTime);
-        _velocity.Normalize();
         transform.position += _velocity * _currentSpeed * Time.deltaTime;
         LimitPosition();
     }

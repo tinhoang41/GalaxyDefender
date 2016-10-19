@@ -4,14 +4,15 @@ using System.Collections;
 public class PolygonMover : GameObjectMover {
 
     public  Vector3     boundSize;
-    private Vector3     destination;
-    private Bounds      movementBound;
     public  float       waitTime;
-    // Use this for 
+	public 	float 		arrivalRadius;
+    
     private float       xMinForCenter;
     private float       xMaxForCenter;
     private float       yMinForCenter;
     private float       yMaxForCenter;
+	private Vector3     destination;
+	private Bounds      movementBound;
     private bool        hasArrived;
 
     public override void Start ()
@@ -37,7 +38,6 @@ public class PolygonMover : GameObjectMover {
     {
         while(true)
         {
-            hasArrived = (destination - transform.position).magnitude <= 0.05f;
             if (hasArrived)
             {
                 yield return new WaitForSeconds(waitTime);
@@ -73,7 +73,23 @@ public class PolygonMover : GameObjectMover {
                 Random.Range(movementBound.min.y, movementBound.max.y),
                 transform.position.z
             );
-        _velocity = destination - transform.position;
+        _velocity  = destination - transform.position;
+		_velocity.Normalize ();
+		_currentSpeed = initialSpeed;
         hasArrived = false;
     }
+
+	protected override void Moving ()
+	{
+		base.Moving ();
+		hasArrived = _currentSpeed <= 0.005f;
+	}
+
+	protected override void UpdateVelocity ()
+	{
+		var desired = destination - transform.position;
+		var length = desired.magnitude;
+		_currentSpeed = length < arrivalRadius ? _currentSpeed * length / arrivalRadius : _currentSpeed;
+		_velocity.Normalize ();
+	}
 }
