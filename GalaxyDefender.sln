@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxyDefender.CSharp.Plugins", "GalaxyDefender.CSharp.Plugins.csproj", "{7CB9DF32-7D65-C074-3140-DD1031BB98A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxyDefender.CSharp", "GalaxyDefender.CSharp.csproj", "{50133987-ED94-A1D2-8D4A-EF2E71F7BD1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxyDefender.CSharp.Editor.Plugins", "GalaxyDefender.CSharp.Editor.Plugins.csproj", "{E25B2D33-6C9F-7D28-79E8-118B0870E8B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CB9DF32-7D65-C074-3140-DD1031BB98A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB9DF32-7D65-C074-3140-DD1031BB98A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB9DF32-7D65-C074-3140-DD1031BB98A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB9DF32-7D65-C074-3140-DD1031BB98A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50133987-ED94-A1D2-8D4A-EF2E71F7BD1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50133987-ED94-A1D2-8D4A-EF2E71F7BD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50133987-ED94-A1D2-8D4A-EF2E71F7BD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50133987-ED94-A1D2-8D4A-EF2E71F7BD1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25B2D33-6C9F-7D28-79E8-118B0870E8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25B2D33-6C9F-7D28-79E8-118B0870E8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25B2D33-6C9F-7D28-79E8-118B0870E8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25B2D33-6C9F-7D28-79E8-118B0870E8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
