@@ -8,6 +8,10 @@ public class RightJoyStickController : GameObjectMover {
     public string horizontalAxisName;
     public string verticalAxisName;
 
+    protected override bool pRotationByVelocity
+    {
+        get { return true; }
+    }
     // Use this for initialization
     public override void Start()
     {
@@ -30,9 +34,13 @@ public class RightJoyStickController : GameObjectMover {
 
     protected override void UpdateVelocity()
     {
-		base.UpdateVelocity();
         _velocity = new Vector3(CnInputManager.GetAxis(horizontalAxisName), CnInputManager.GetAxis(verticalAxisName), 0.0f);
+
         if (_velocity.magnitude < joystickThreshold)
-            _velocity = Vector3.zero;
+            _currentSpeed = 0;
+        else
+            _currentSpeed = initialSpeed;
+
+        base.UpdateVelocity();
     }
 }

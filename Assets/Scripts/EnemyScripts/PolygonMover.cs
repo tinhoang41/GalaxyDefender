@@ -5,16 +5,24 @@ public class PolygonMover : GameObjectMover {
 
     public  Vector3     boundSize;
     public  float       waitTime;
-	public 	float 		arrivalRadius;
+    public 	float 		arrivalRadius;
     
     private float       xMinForCenter;
     private float       xMaxForCenter;
     private float       yMinForCenter;
     private float       yMaxForCenter;
-	private Vector3     destination;
-	private Bounds      movementBound;
+    private Vector3     destination;
+    private Bounds      movementBound;
     private bool        hasArrived;
+    private Vector3 steering;
 
+    protected override bool pRotationByVelocity
+    {
+        get
+        {
+            return true;
+        }
+    }
     public override void Start ()
     {
         base.Start();
@@ -27,7 +35,7 @@ public class PolygonMover : GameObjectMover {
         yMaxForCenter = _boundary.max.y - (boundSize.y / 2) - (float)size/2;
 
         hasArrived    = false;
-
+        steering = Vector3.zero;
         GetNewDestinationPoint();
         StartCoroutine("MovePolygon");
     }
@@ -41,12 +49,13 @@ public class PolygonMover : GameObjectMover {
             if (hasArrived)
             {
                 yield return new WaitForSeconds(waitTime);
-                _velocity = Vector3.zero;
+                _currentSpeed = 0;
                 GetNewDestinationPoint();
             }
             else
             {
                 Moving();
+                Steering();
                 yield return null;
             }
         }
@@ -73,23 +82,34 @@ public class PolygonMover : GameObjectMover {
                 Random.Range(movementBound.min.y, movementBound.max.y),
                 transform.position.z
             );
+
         _velocity  = destination - transform.position;
-		_velocity.Normalize ();
-		_currentSpeed = initialSpeed;
+        _velocity.Normalize ();
+        _currentSpeed = initialSpeed;
         hasArrived = false;
     }
 
-	protected override void Moving ()
-	{
-		base.Moving ();
-		hasArrived = _currentSpeed <= 0.005f;
-	}
+    protected override void Moving ()
+    {
+        base.Moving ();
+        hasArrived = _currentSpeed <= 0.005f;
+    }
 
-	protected override void UpdateVelocity ()
-	{
-		var desired = destination - transform.position;
-		var length = desired.magnitude;
-		_currentSpeed = length < arrivalRadius ? _currentSpeed * length / arrivalRadius : _currentSpeed;
-		_velocity.Normalize ();
-	}
+    protected override void UpdateVelocity ()
+    {
+        var desired   = destination - transform.position;
+        var length    = desired.magnitude;
+        UpdateSeekingVelocity();
+        _currentSpeed = length < arrivalRadius ? _currentSpeed * length / arrivalRadius : _currentSpeed;
+        _velocity.Normalize ();
+    }
+
+    protected void UpdateSeekingVelocity()
+    {
+        var desiredVelocity = destination - transform.position;
+        desiredVelocity.Normalize();
+        steering = desiredVelocity - _velocity;
+        steering *= 0.2f;
+        _velocity += steering;
+    }
 }

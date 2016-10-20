@@ -47,6 +47,7 @@ public class EnemyGenerator : MonoBehaviour {
 
         enemy.GetComponent<EnemyData>().Initialize(data);
         enemy.GetComponent<CircleMover>().Initialize(velocity);
+
         //Debug.Log("Generated circle");
         //enemy.Initialize(name, health, weapon, forceUser);
     }

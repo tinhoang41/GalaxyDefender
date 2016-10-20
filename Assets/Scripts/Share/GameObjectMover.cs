@@ -15,13 +15,36 @@ public class GameObjectMover : MonoBehaviour {
     protected   float       _currentSpeed;
     protected   Bounds      _boundary;
     protected   Vector3     _velocity;
+
+    protected virtual bool pRotationByVelocity
+    {
+        get { return false; }
+    }
+
+    protected bool pReachVerticalBoundary
+    {
+        get
+        {
+            return transform.position.y <= _boundary.min.y
+                   || transform.position.y >= _boundary.max.y;
+        }
+    }
+
+    protected bool pReachHorizontalBoundary
+    {
+        get
+        {
+            return transform.position.x <= _boundary.min.x
+                   || transform.position.x >= _boundary.max.x;
+        }
+    }
     // Use this for initialization
 
     public virtual void Start()
     {
-		_currentSpeed      = initialSpeed;
+        _currentSpeed      = initialSpeed;
         _boundary          = SetUpBounds();
-        _velocity          = Vector3.zero;
+        _velocity          = Vector3.up;
         _directionToRotate = transform.rotation;
         _rotationAngle     = 0.0f;
         _isRotating        = false;
@@ -35,10 +58,10 @@ public class GameObjectMover : MonoBehaviour {
 
     #region Translation related updates
     protected virtual void UpdateVelocity()
-	{
-		_currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
-		_velocity.Normalize();
-	}
+    {
+        _currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
+        _velocity.Normalize();
+    }
 
     protected virtual void Moving()
     {
@@ -61,9 +84,18 @@ public class GameObjectMover : MonoBehaviour {
 
     protected virtual void UpdateRotationVariables()
     {
-        _rotationAngle     = 0;
-        _directionToRotate = transform.rotation;
-        _isRotating        = false;
+        if (pRotationByVelocity)
+        {
+            _rotationAngle     = GetRotationAngleFromVector(_velocity);
+            _directionToRotate = Quaternion.Euler(0, 0, -_rotationAngle);
+            _isRotating        = -_rotationAngle != transform.rotation.eulerAngles.z;
+        }
+        else
+        {
+            _rotationAngle     = 0;
+            _directionToRotate = transform.rotation;
+            _isRotating        = false;
+        }
     }
     #endregion
 
@@ -80,7 +112,8 @@ public class GameObjectMover : MonoBehaviour {
     Bounds SetUpBounds()
     {
         var retVal = new Bounds(Vector3.zero, Vector3.zero);
-        try {
+        try
+        {
              retVal = GameObject.FindGameObjectWithTag("Boundary").GetComponent<Collider2D>().bounds;
         }
         catch
@@ -89,6 +122,12 @@ public class GameObjectMover : MonoBehaviour {
         }
 
         return retVal;
+    }
+
+    protected float GetRotationAngleFromVector(Vector3 direction)
+    {
+        direction.Normalize();
+        return Mathf.Rad2Deg* Mathf.Atan2(direction.x, direction.y);
     }
     #endregion
 }
