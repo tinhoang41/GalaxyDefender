@@ -10,15 +10,12 @@ public class BulletMover : GameObjectMover
 
     protected override bool pRotationByVelocity
     {
-        get
-        {
-            return true;
-        }
+        get { return true; }
     }
 
-    public override void Start()
+    protected override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         _velocity = transform.rotation * new Vector3(0, speed, 0);
     }
 

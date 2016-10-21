@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 public class GameObjectMover : MonoBehaviour {
 
+    #region Fields
     public      float       acceleration;
     public      float       initialSpeed;
     public      float       maxSpeed;
@@ -16,6 +17,11 @@ public class GameObjectMover : MonoBehaviour {
     protected   Bounds      _boundary;
     protected   Vector3     _velocity;
 
+    protected  List<string> _coroutineList;
+
+    #endregion
+
+    #region Properties
     protected virtual bool pRotationByVelocity
     {
         get { return false; }
@@ -38,48 +44,61 @@ public class GameObjectMover : MonoBehaviour {
                    || transform.position.x >= _boundary.max.x;
         }
     }
-    // Use this for initialization
 
-    public virtual void Start()
+    protected virtual bool pRunCoroutine
+    {
+        get { return false; }
+    }
+    #endregion
+
+    #region Methods
+    public virtual void Update()
+    {
+        if (!pRunCoroutine)
+        {
+            Moving();
+            Rotate();
+        }
+    }
+
+    #region Intializes
+    protected virtual void Initialize()
     {
         _currentSpeed      = initialSpeed;
         _boundary          = SetUpBounds();
-        _velocity          = Vector3.up;
+        _velocity          = transform.rotation * Vector3.up;
         _directionToRotate = transform.rotation;
         _rotationAngle     = 0.0f;
         _isRotating        = false;
     }
 
-    public virtual void Update()
+    public virtual void Start()
     {
-        Moving();
-        Steering();
+        Initialize();
+        RunCoroutineList();
     }
+    #endregion
 
     #region Translation related updates
     protected virtual void UpdateVelocity()
     {
-        _currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
         _velocity.Normalize();
+        _currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
     }
 
     protected virtual void Moving()
     {
         UpdateVelocity();
-        transform.position += _velocity * _currentSpeed * Time.deltaTime;
+        UpdatePosition();
         LimitPosition();
     }
     #endregion
 
     #region Rotation related updates
-    protected virtual void Steering()
+    protected virtual void Rotate()
     {
         UpdateRotationVariables();
-        if (_isRotating)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, _directionToRotate, rotatingSpeed * Time.time);
-            _isRotating        = (transform.rotation.eulerAngles - _directionToRotate.eulerAngles).magnitude >= 0.005f;
-        }
+        UpdateRotation();
     }
 
     protected virtual void UpdateRotationVariables()
@@ -99,9 +118,9 @@ public class GameObjectMover : MonoBehaviour {
     }
     #endregion
 
-	#region Steering Related Behaviour
+    #region Steering Related Behaviour
 
-	#endregion
+    #endregion
 
     #region Utilities
     void LimitPosition()
@@ -133,5 +152,36 @@ public class GameObjectMover : MonoBehaviour {
         direction.Normalize();
         return Mathf.Rad2Deg* Mathf.Atan2(direction.x, direction.y);
     }
+
+    protected virtual void UpdatePosition()
+    {
+        transform.position += _velocity * _currentSpeed * Time.deltaTime;
+    }
+
+    protected virtual void UpdateRotation()
+    {
+        if (_isRotating)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, _directionToRotate, rotatingSpeed * Time.time);
+            _isRotating = (transform.rotation.eulerAngles - _directionToRotate.eulerAngles).magnitude >= 0.005f;
+        }
+    }
+
+    protected virtual void SetUpCorouTineList()
+    {
+        _coroutineList = new List<string>();
+    }
+
+    protected virtual void RunCoroutineList()
+    {
+        if (!pRunCoroutine)
+            return;
+
+        SetUpCorouTineList();
+        foreach (var coroutin in _coroutineList)
+            StartCoroutine(coroutin);
+    }
+    #endregion
+
     #endregion
 }

@@ -7,9 +7,10 @@ public class CircleMover : GameObjectMover {
 
     private Vector3 currentDirection;
 
-    public override void Start()
+
+    protected override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         _velocity = initialDirection;
     }
 

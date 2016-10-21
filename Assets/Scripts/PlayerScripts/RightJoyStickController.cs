@@ -12,13 +12,12 @@ public class RightJoyStickController : GameObjectMover {
     {
         get { return true; }
     }
-    // Use this for initialization
-    public override void Start()
-    {
-        base.Start();
 
+    protected override void Initialize()
+    {
+        base.Initialize();
         _rotationAngle = 0.0f;
-        _isRotating        = false;
+        _isRotating = false;
         _directionToRotate = transform.rotation;
     }
 
@@ -43,4 +42,5 @@ public class RightJoyStickController : GameObjectMover {
 
         base.UpdateVelocity();
     }
+
 }
