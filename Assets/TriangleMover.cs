@@ -52,7 +52,7 @@ public class TriangleMover : GameObjectMover {
         destination = player.transform.position;
         var desired = destination - transform.position;
         var length = desired.magnitude;
-        _currentSpeed = length < 1.0f ? _currentSpeed * length / 1.0f : _currentSpeed;
+		_currentSpeed = length < 1.0f ? (_currentSpeed + acceleration * Time.deltaTime) * length / 1.0f : _currentSpeed + acceleration * Time.deltaTime;
         UpdateSeekingVelocity();
         _velocity.Normalize();
     }
