@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0
-  initialSpeed: 3
+  initialSpeed: 6
   maxSpeed: 10
   rotatingSpeed: 1
   speed: 10

@@ -17,8 +17,7 @@ public class SeekingMover : GameObjectMover {
     protected override void Initialize()
     {
         base.Initialize();
-
-        destination = transform.position;
+        SetDestinations();
         hasTarget   = false;
         steering    = GetComponent<SteeringBasic>();
     }
@@ -53,6 +52,7 @@ public class SeekingMover : GameObjectMover {
         if (!hasTarget)
             Debug.Log("Reach Target");
     }
+
     protected override void Moving()
     {
         if (!hasTarget)
@@ -62,6 +62,11 @@ public class SeekingMover : GameObjectMover {
             base.Moving();
             CheckForArrival();
         }
+    }
+
+    protected virtual void SetDestinations()
+    {
+        destination = transform.position;
     }
 
 }
