@@ -83,12 +83,12 @@ public class PolygonMover : SeekingMover {
                 transform.position.z
             );
 
-        _currentSpeed = initialSpeed;
+        _currentSpeed = _initialSpeed;
         hasTarget     = true;
     }
 
     protected override void CheckForArrival()
-    {
+    { 
         base.CheckForArrival();
         isWaiting = !hasTarget;
     }

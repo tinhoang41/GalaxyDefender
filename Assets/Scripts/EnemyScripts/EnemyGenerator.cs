@@ -35,7 +35,6 @@ public class EnemyGenerator : MonoBehaviour {
         if (enemy == null)
             return;
         enemy.GetComponent<EnemyData>().Initialize(data);
-         //enemy.Initialize(name, health, weapon, forceUser);
     }
 
     public static void GenerateCircle(EnemyDataParameter data, Vector3 position, Vector3 velocity, Quaternion rotation)

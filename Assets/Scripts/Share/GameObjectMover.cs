@@ -5,9 +5,12 @@ using System.Collections.Generic;
 public class GameObjectMover : MonoBehaviour {
 
     #region Fields
-    public      float       acceleration;
-    public      float       initialSpeed;
+    public      float       maxAcceleration;
+    public      float       minAcceleration;
+
+    public      float       minSpeed;
     public      float       maxSpeed;
+
     public      float       rotatingSpeed;
 
     protected   bool        _isRotating;
@@ -16,6 +19,8 @@ public class GameObjectMover : MonoBehaviour {
     protected   float       _currentSpeed;
     protected   Bounds      _boundary;
     protected   Vector3     _velocity;
+    protected   float       _currentAcceleration;
+    protected   float       _initialSpeed;
 
     protected  List<string> _coroutineList;
 
@@ -64,12 +69,19 @@ public class GameObjectMover : MonoBehaviour {
     #region Intializes
     protected virtual void Initialize()
     {
-        _currentSpeed      = initialSpeed;
-        _boundary          = SetUpBounds();
-        _velocity          = transform.rotation * Vector3.up;
-        _directionToRotate = transform.rotation;
-        _rotationAngle     = 0.0f;
-        _isRotating        = false;
+        _boundary            = SetUpBounds();
+        _velocity            = transform.rotation * Vector3.up;
+        _directionToRotate   = transform.rotation;
+        _rotationAngle       = 0.0f;
+        _isRotating          = false;
+
+        if (gameObject.tag == "Player")
+        {
+            _currentSpeed = _initialSpeed = minSpeed;
+            _currentAcceleration = 0.0f;
+        }
+        else
+            SetUpVariablesBasedOnData();
     }
 
     public virtual void Start()
@@ -82,8 +94,8 @@ public class GameObjectMover : MonoBehaviour {
     #region Translation related updates
     protected virtual void UpdateVelocity()
     {
-        _velocity.Normalize();
-        _currentSpeed = Mathf.Clamp(_currentSpeed + acceleration * Time.deltaTime, 0, maxSpeed);
+        maxAcceleration = Mathf.Clamp(maxAcceleration, 0, maxAcceleration);
+        _currentSpeed   = Mathf.Clamp(_currentSpeed + maxAcceleration * Time.deltaTime, 0, maxSpeed);
     }
 
     protected virtual void Moving()
@@ -116,13 +128,43 @@ public class GameObjectMover : MonoBehaviour {
             _isRotating        = false;
         }
     }
-    #endregion
 
-    #region Steering Related Behaviour
+    protected virtual void UpdatePosition()
+    {
+        ValidateVelocity();
+        transform.position += _velocity * _currentSpeed * Time.deltaTime;
+    }
+
+    protected virtual void UpdateRotation()
+    {
+        if (_isRotating)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, _directionToRotate, rotatingSpeed * Time.time);
+            _isRotating = (transform.rotation.eulerAngles - _directionToRotate.eulerAngles).magnitude >= 0.05f;
+        }
+    }
 
     #endregion
 
     #region Utilities
+    protected virtual void SetUpVariablesBasedOnData()
+    {
+        var enemyData        = GetComponent<EnemyData>();
+        var maxLevel         = enemyData.data.maxLevel;
+        var minLevel         = enemyData.data.minLevel;
+        var currentLevel     = enemyData.data.currentLevel;
+        var fraction         = currentLevel / (float)(maxLevel - minLevel);
+
+        _initialSpeed        = GetFractionalValue(minSpeed, maxSpeed, fraction);
+        _currentAcceleration = GetFractionalValue(minAcceleration, maxAcceleration, fraction);
+        _currentSpeed        = _initialSpeed;
+
+    }
+
+    float GetFractionalValue(float min, float max, float fraction)
+    {
+        return min + (fraction * (max - min));
+    }
     void LimitPosition()
     {
         Vector3 currentPosition = transform.position;
@@ -153,20 +195,6 @@ public class GameObjectMover : MonoBehaviour {
         return Mathf.Rad2Deg* Mathf.Atan2(direction.x, direction.y);
     }
 
-    protected virtual void UpdatePosition()
-    {
-        transform.position += _velocity * _currentSpeed * Time.deltaTime;
-    }
-
-    protected virtual void UpdateRotation()
-    {
-        if (_isRotating)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, _directionToRotate, rotatingSpeed * Time.time);
-            _isRotating = (transform.rotation.eulerAngles - _directionToRotate.eulerAngles).magnitude >= 0.005f;
-        }
-    }
-
     protected virtual void SetUpCorouTineList()
     {
         _coroutineList = new List<string>();
@@ -180,6 +208,12 @@ public class GameObjectMover : MonoBehaviour {
         SetUpCorouTineList();
         foreach (var coroutin in _coroutineList)
             StartCoroutine(coroutin);
+    }
+
+    protected virtual void ValidateVelocity()
+    {
+        _velocity.z = 0;
+        _velocity.Normalize();
     }
     #endregion
 

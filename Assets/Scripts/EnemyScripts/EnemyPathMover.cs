@@ -35,8 +35,15 @@ public class EnemyPathMover : SeekingMover {
 
         Debug.Log("Find " + currentIndex);
         hasTarget   = true;
-        destination = destinationsList[currentIndex++];
+        destination = destinationsList[currentIndex];
 
+    }
+
+    protected override void CheckForArrival()
+    {
+        base.CheckForArrival();
+        
+        currentIndex = !hasTarget ? ++currentIndex : currentIndex;
     }
 
     IEnumerator FollowPath()
@@ -51,7 +58,7 @@ public class EnemyPathMover : SeekingMover {
                 yield return null;
             }
             repeating--;
-            //yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 }

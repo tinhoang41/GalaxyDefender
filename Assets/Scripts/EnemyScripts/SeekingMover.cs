@@ -7,7 +7,7 @@ public class SeekingMover : GameObjectMover {
     protected bool          hasTarget;
     protected SteeringBasic steering;
 
-    private const float ACCEPTABLE_VALUE = 0.5f;
+    private const float ACCEPTABLE_VALUE = 1.0f;
 
     protected override bool pRotationByVelocity
     {
@@ -24,7 +24,7 @@ public class SeekingMover : GameObjectMover {
 
     protected virtual void FindTarget()
     {
-        _currentSpeed = initialSpeed;
+        _currentSpeed = _initialSpeed;
     }
 
     protected virtual void UpdateTarget() { }
@@ -37,7 +37,7 @@ public class SeekingMover : GameObjectMover {
         {
             var steeringVector = steering.GetSteering(_velocity, destination);
             _velocity         += steeringVector;
-            _currentSpeed      = steering.GetSpeed(destination, _currentSpeed);
+            _currentSpeed      = steering.GetSpeed(destination, _currentSpeed);            
         }
         else
             _velocity = (destination - transform.position).normalized;
@@ -49,8 +49,6 @@ public class SeekingMover : GameObjectMover {
     {
         var diff = transform.position - destination;
         hasTarget = (transform.position - destination).magnitude > ACCEPTABLE_VALUE ||  _currentSpeed > ACCEPTABLE_VALUE;
-        if (!hasTarget)
-            Debug.Log("Reach Target");
     }
 
     protected override void Moving()

@@ -3,12 +3,13 @@ using System.Collections;
 
 public class SteeringBasic : MonoBehaviour {
 
-    public float arrivalRadius = 0.5f;
-    public float steeringSpeed = 20.0f;
+    public float arrivalRadius;
+    public float steeringSpeed;
 
+    private float slowingDownSpeed;
     // Use this for initialization
     void Start () {
-    
+        slowingDownSpeed = 0.0f;
     }
     
     // Update is called once per frame
@@ -23,15 +24,23 @@ public class SteeringBasic : MonoBehaviour {
         desiredVelocity.z   = 0;
         desiredVelocity.Normalize();
         retVal              = desiredVelocity - currentVelocity;
+        retVal.z            = 0;
+
         return retVal /= steeringSpeed;
     }
 
     public float GetSpeed(Vector3 destination, float currentSpeed)
     {
+        var retVal        = currentSpeed;
         var desiredVelocy = destination - transform.position;
         desiredVelocy.z   = 0;
         var distance      = desiredVelocy.magnitude;
 
-        return distance >= arrivalRadius ? currentSpeed : currentSpeed * Mathf.Clamp(distance / arrivalRadius, 0, 1);
+        if (distance < arrivalRadius)
+            retVal = slowingDownSpeed * Mathf.Clamp(distance / arrivalRadius, 0, 1);
+        else
+            slowingDownSpeed = currentSpeed;
+
+        return retVal;
     }
 }

@@ -7,6 +7,7 @@ public class RightJoyStickController : GameObjectMover {
     public float  joystickThreshold;
     public string horizontalAxisName;
     public string verticalAxisName;
+    public float  initialAcceleration;
 
     protected override bool pRotationByVelocity
     {
@@ -16,9 +17,10 @@ public class RightJoyStickController : GameObjectMover {
     protected override void Initialize()
     {
         base.Initialize();
-        _rotationAngle = 0.0f;
-        _isRotating = false;
-        _directionToRotate = transform.rotation;
+        _rotationAngle       = 0.0f;
+        _isRotating          = false;
+        _directionToRotate   = transform.rotation;
+        _currentAcceleration = initialAcceleration;
     }
 
     protected override void UpdateRotationVariables()
@@ -38,7 +40,7 @@ public class RightJoyStickController : GameObjectMover {
         if (_velocity.magnitude < joystickThreshold)
             _currentSpeed = 0;
         else
-            _currentSpeed = initialSpeed;
+            _currentSpeed = _initialSpeed;
 
         base.UpdateVelocity();
     }

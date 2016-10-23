@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CircleMover : GameObjectMover {
 
-    public Vector3 initialDirection;
+    private Vector3 initialDirection;
 
     private Vector3 currentDirection;
 

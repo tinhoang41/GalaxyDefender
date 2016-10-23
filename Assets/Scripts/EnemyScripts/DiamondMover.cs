@@ -28,7 +28,7 @@ public class DiamondMover : SeekingMover {
         if((player.transform.position - transform.position).magnitude >= distanceThreshold)
         {
             hasTarget     = true;
-            _currentSpeed = initialSpeed;
+            _currentSpeed = _initialSpeed;
             destination   = player.transform.position;
         }
 
