@@ -4,7 +4,6 @@ using System.Collections;
 public class BulletMover : GameObjectMover
 {
 
-    public float speed;
     // Use this for initialization
 
 
@@ -16,7 +15,7 @@ public class BulletMover : GameObjectMover
     protected override void Initialize()
     {
         base.Initialize();
-        _velocity = transform.rotation * new Vector3(0, speed, 0);
+        _velocity = transform.rotation * new Vector3(0, _initialSpeed, 0);
     }
 
     protected override void UpdateVelocity()

@@ -37,6 +37,14 @@ public class EnemyGenerator : MonoBehaviour {
         enemy.GetComponent<EnemyData>().Initialize(data);
     }
 
+    public static void GenerateTriangle(EnemyDataParameter data, Vector3 position, Vector3 velocity, Quaternion rotation)
+    {
+        var enemy = Instantiate(instance.triangleObject, position, rotation) as GameObject;
+        if (enemy == null)
+            return;
+        enemy.GetComponent<EnemyData>().Initialize(data);
+    }
+
     public static void GenerateCircle(EnemyDataParameter data, Vector3 position, Vector3 velocity, Quaternion rotation)
     {
         var enemy = Instantiate(instance.circleObject, position, rotation) as GameObject;

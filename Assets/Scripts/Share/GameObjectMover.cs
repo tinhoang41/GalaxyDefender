@@ -75,13 +75,15 @@ public class GameObjectMover : MonoBehaviour {
         _rotationAngle       = 0.0f;
         _isRotating          = false;
 
-        if (gameObject.tag == "Player")
+        if (gameObject.tag == "Enemy")
+        {
+            SetUpVariablesBasedOnData();
+        }
+        else
         {
             _currentSpeed = _initialSpeed = minSpeed;
             _currentAcceleration = 0.0f;
         }
-        else
-            SetUpVariablesBasedOnData();
     }
 
     public virtual void Start()
