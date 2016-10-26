@@ -19,4 +19,17 @@ public class PolygonWaypoints : SpawnWayPoint {
                 0
             );
     }
+
+	protected override List<SpawnData> GetCurrentSpawningList()
+	{
+		var retVal = new List<SpawnData>();
+
+		for (int i = 0; i < enemiesPerTime; i++)
+		{
+			var bound = wayPoints[currentWaypointIndex++ % wayPoints.Count];
+			retVal.AddRange(GetSpawningDataList(bound));
+		}
+
+		return retVal;
+	}
 }
