@@ -98,7 +98,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 58306852}
-  - 114: {fileID: 58306853}
   - 114: {fileID: 58306854}
   m_Layer: 0
   m_Name: TriangleSpawner
@@ -120,33 +119,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 444218588}
   m_RootOrder: 2
---- !u!114 &58306853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 58306851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbc61402d38f984390e73ac886dd05b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wayPoints:
-  - m_Center: {x: -14, y: 0, z: 0}
-    m_Extent: {x: 1, y: 7, z: 0}
-  - m_Center: {x: 0, y: 7, z: 0}
-    m_Extent: {x: 14, y: 1, z: 0}
-  - m_Center: {x: 14, y: 0, z: 0}
-    m_Extent: {x: 1, y: 7, z: 0}
-  - m_Center: {x: 0, y: -7, z: 0}
-    m_Extent: {x: 14, y: 1, z: 0}
-  maxSpawnRateInSeconds: 5
-  minSpawnRateInSeconds: 0.25
-  maxNumberToSpawn: 20
-  minNumberToSpawn: 3
-  minSpawnPerTime: 1
-  maxSpawnPertime: 1
-  alertTime: 0
 --- !u!114 &58306854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +130,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006ca9f431a2864419dbc5ab4cce39c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wayPoints:
+  - boundary:
+      m_Center: {x: -14, y: 0, z: 0}
+      m_Extent: {x: 1, y: 14.5, z: 0}
+    initialEnemyRotation: 270
+  - boundary:
+      m_Center: {x: 0, y: 7, z: 0}
+      m_Extent: {x: 7.5, y: 1, z: 0}
+    initialEnemyRotation: 180
+  - boundary:
+      m_Center: {x: 14, y: 0, z: 0}
+      m_Extent: {x: 1, y: 14.5, z: 0}
+    initialEnemyRotation: 90
+  - boundary:
+      m_Center: {x: 0, y: -7, z: 0}
+      m_Extent: {x: 7.5, y: 1, z: 0}
+    initialEnemyRotation: 0
+  maxSpawnRateInSeconds: 4
+  minSpawnRateInSeconds: 0.15
+  maxNumberToSpawn: 9
+  minNumberToSpawn: 1
+  minSpawnPerTime: 1
+  maxSpawnPertime: 2
+  alertTime: 0.5
+  triangleObject: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03,
+    type: 2}
 --- !u!1 &131141544
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +491,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 492854737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.51, y: 0, z: 0}
+  m_LocalPosition: {x: -2.23, y: 1.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -525,15 +523,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8ec9266d64b3c42a4b0fc478a43162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 0
-  minAcceleration: 0
-  minSpeed: 4
-  maxSpeed: 10
+  maxAcceleration: 0.5
+  minAcceleration: 0.5
+  minSpeed: 5
+  maxSpeed: 9
   rotatingSpeed: 0.15
-  joystickThreshold: 0.15
+  joystickThreshold: 0.5
   horizontalAxisName: RotationHorizontal
   verticalAxisName: RotationVertical
-  initialAcceleration: 0.25
+  initialAcceleration: 2
 --- !u!114 &492854741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +685,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011713193348, guid: e28c938deaf1bc64a800225d7f483b03,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e28c938deaf1bc64a800225d7f483b03, type: 2}
@@ -1139,7 +1142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1246941591
 Transform:
   m_ObjectHideFlags: 0
@@ -1165,18 +1168,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints:
-  - m_Center: {x: 0, y: 2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  - m_Center: {x: -7.5, y: 2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  - m_Center: {x: 7.5, y: 2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  - m_Center: {x: 0, y: -2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  - m_Center: {x: -7.5, y: -2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  - m_Center: {x: 7.5, y: -2.5, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
+  - boundary:
+      m_Center: {x: 0, y: 2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
+  - boundary:
+      m_Center: {x: 7.5, y: 2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
+  - boundary:
+      m_Center: {x: -7.5, y: 2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
+  - boundary:
+      m_Center: {x: 0, y: -2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
+  - boundary:
+      m_Center: {x: -7.5, y: -2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
+  - boundary:
+      m_Center: {x: 7.5, y: -2.5, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+    initialEnemyRotation: 0
   maxSpawnRateInSeconds: 5
   minSpawnRateInSeconds: 0.25
   maxNumberToSpawn: 20

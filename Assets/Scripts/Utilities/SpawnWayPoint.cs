@@ -7,17 +7,32 @@ public struct SpawnData
 {
     public Vector3 position;
     public EnemyDataParameter enemyData;
+    public Quaternion rotation;
 
-    public SpawnData(Vector3 pos, EnemyDataParameter data)
+    public SpawnData(Vector3 pos, EnemyDataParameter data, Quaternion rot)
     {
         position  = pos;
         enemyData = data;
+        rotation  = rot;
+    }
+}
+
+[System.Serializable]
+public struct WayPointData
+{
+    public Bounds boundary;
+    public float initialEnemyRotation;
+
+    public WayPointData(Bounds bound, float rotation)
+    {
+        boundary             = bound;
+        initialEnemyRotation = rotation;
     }
 }
 
 public class SpawnWayPoint : MonoBehaviour {
 
-    public List<Bounds>  wayPoints;
+    public List<WayPointData>  wayPoints;
     public float         maxSpawnRateInSeconds;
     public float         minSpawnRateInSeconds;
     public int           maxNumberToSpawn;
@@ -83,21 +98,24 @@ public class SpawnWayPoint : MonoBehaviour {
         return new EnemyDataParameter(1, 5, 1);
     }
 
-    protected virtual SpawnData GetSpawningData(Bounds bound)
+    protected virtual SpawnData GetSpawningData(WayPointData wayPoint)
     {
-        var position             = GetSpawningEnemyPosition(bound);
+        var position             = GetSpawningEnemyPosition(wayPoint.boundary);
         var enemiesDataParameter = GetSpawningEnemyData();
-        return new SpawnData(position, enemiesDataParameter);
+        var rotation             = Quaternion.Euler(0, 0, wayPoint.initialEnemyRotation);
+        return new SpawnData(position, enemiesDataParameter, rotation);
     }
 
     protected virtual List<SpawnData> GetCurrentSpawningList()
     {
         var retVal = new List<SpawnData>();
+
         for(int i = 0; i < enemiesPerTime; i++)
         {
             var bound = wayPoints[currentWaypointIndex++ % wayPoints.Count];
             retVal.Add(GetSpawningData(bound));
         }
+
         return retVal;
     }
 

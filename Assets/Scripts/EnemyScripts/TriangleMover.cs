@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class TriangleMover : SeekingMover {
 
-    public bool isTravelingVertical;
+    protected bool isTravelingVertical;
     protected Vector3[] anchorPoints;
     protected float xMin, xMax, yMin, yMax;
     protected bool  reachBoundary;
@@ -34,10 +34,13 @@ public class TriangleMover : SeekingMover {
         currentIndex  = 1;
         destination   = anchorPoints[currentIndex];
         hasTarget     = true;
+        Debug.Log("Velocity: " + _velocity + " Speed : " + _currentSpeed + "Rotation: " + transform.rotation.eulerAngles);
     }
 
     protected void SetUpAnchorPoints()
     {
+        isTravelingVertical = transform.rotation.eulerAngles.z == 0.0f || transform.rotation.eulerAngles.z == 180.0f;
+
         if (isTravelingVertical)
         {
             anchorPoints = new Vector3[] 
@@ -88,7 +91,7 @@ public class TriangleMover : SeekingMover {
     IEnumerator MoveTriangle()
     {
         var runTime = GetComponentInParent<EnemyData>().data.currentLevel;
-        while (runTime > 0)
+        while (true)
         {
             if (reachBoundary)
             {

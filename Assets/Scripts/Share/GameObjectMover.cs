@@ -96,8 +96,8 @@ public class GameObjectMover : MonoBehaviour {
     #region Translation related updates
     protected virtual void UpdateVelocity()
     {
-        maxAcceleration = Mathf.Clamp(maxAcceleration, 0, maxAcceleration);
-        _currentSpeed   = Mathf.Clamp(_currentSpeed + maxAcceleration * Time.deltaTime, 0, maxSpeed);
+        _currentAcceleration = Mathf.Clamp(_currentAcceleration, 0, maxAcceleration);
+        _currentSpeed   = Mathf.Clamp(_currentSpeed + _currentAcceleration * Time.deltaTime, 0, maxSpeed);
     }
 
     protected virtual void Moving()
