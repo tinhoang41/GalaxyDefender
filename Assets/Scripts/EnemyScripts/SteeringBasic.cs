@@ -29,6 +29,17 @@ public class SteeringBasic : MonoBehaviour {
         return retVal /= steeringSpeed;
     }
 
+    public Vector3 GetSteeringByTwoVelocity(Vector3 currentVelocity, Vector3 desiredVelocity)
+    {
+        var retVal = Vector3.zero;
+        desiredVelocity.z = 0;
+        desiredVelocity.Normalize();
+        retVal = desiredVelocity - currentVelocity;
+        retVal.z = 0;
+
+        return retVal /= steeringSpeed;
+    }
+
     public float GetSpeed(Vector3 destination, float currentSpeed)
     {
         var retVal        = currentSpeed;

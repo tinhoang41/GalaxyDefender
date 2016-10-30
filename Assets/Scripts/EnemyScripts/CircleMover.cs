@@ -11,7 +11,6 @@ public class CircleMover : GameObjectMover {
     protected override void Initialize()
     {
         base.Initialize();
-        _velocity = initialDirection;
     }
 
     protected override void UpdateVelocity()

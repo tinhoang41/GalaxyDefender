@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &58306852
 Transform:
   m_ObjectHideFlags: 0
@@ -133,29 +133,36 @@ MonoBehaviour:
   wayPoints:
   - boundary:
       m_Center: {x: -14, y: 0, z: 0}
-      m_Extent: {x: 1, y: 14.5, z: 0}
+      m_Extent: {x: 0.5, y: 8, z: 0}
     initialEnemyRotation: 270
   - boundary:
       m_Center: {x: 0, y: 7, z: 0}
-      m_Extent: {x: 7.5, y: 1, z: 0}
+      m_Extent: {x: 15, y: 0.5, z: 0}
     initialEnemyRotation: 180
   - boundary:
       m_Center: {x: 14, y: 0, z: 0}
-      m_Extent: {x: 1, y: 14.5, z: 0}
+      m_Extent: {x: 0.5, y: 8, z: 0}
     initialEnemyRotation: 90
   - boundary:
       m_Center: {x: 0, y: -7, z: 0}
-      m_Extent: {x: 7.5, y: 1, z: 0}
+      m_Extent: {x: 15, y: 0.5, z: 0}
     initialEnemyRotation: 0
+  objectToSpawn: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03,
+    type: 2}
+  EnemiesLevelFactor: 10
+  maxEnemiesLevel: 10
+  minEnemiesLevel: 1
+  SpawnRateFactor: 10
+  spawnRateDecrement: 0.25
   maxSpawnRateInSeconds: 4
   minSpawnRateInSeconds: 0.15
-  maxNumberToSpawn: 9
+  EnemiesToSpawnFactor: 10
+  enemiesSpawnIncrement: 5
   minNumberToSpawn: 1
+  EnemiesSpawnPerTimeFactor: 50
   minSpawnPerTime: 1
-  maxSpawnPertime: 2
+  maxSpawnPertime: 1
   alertTime: 0.5
-  triangleObject: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03,
-    type: 2}
 --- !u!1 &131141544
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +484,7 @@ GameObject:
   - 50: {fileID: 492854742}
   - 114: {fileID: 492854743}
   - 114: {fileID: 492854740}
+  - 114: {fileID: 492854744}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -523,11 +531,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8ec9266d64b3c42a4b0fc478a43162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 0.5
-  minAcceleration: 0.5
-  minSpeed: 5
-  maxSpeed: 9
-  rotatingSpeed: 0.15
+  maxAcceleration: 0
+  minAcceleration: 0
+  minSpeed: 6
+  maxSpeed: 6
+  rotatingSpeed: 0.25
   joystickThreshold: 0.5
   horizontalAxisName: RotationHorizontal
   verticalAxisName: RotationVertical
@@ -578,6 +586,19 @@ MonoBehaviour:
   joystickThreshold: 0.3
   numberSprayPerRound: 360
   numberOfRound: 2
+--- !u!114 &492854744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 492854737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6739eef8057d42b4888d50172e6562e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrivalRadius: 5
+  steeringSpeed: 12
 --- !u!1 &791061213
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +706,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000011713193348, guid: e28c938deaf1bc64a800225d7f483b03,
         type: 2}
@@ -943,7 +964,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.519309
+  orthographic size: 7.478111
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1192,13 +1213,21 @@ MonoBehaviour:
       m_Center: {x: 7.5, y: -2.5, z: 0}
       m_Extent: {x: 5, y: 5, z: 0}
     initialEnemyRotation: 0
-  maxSpawnRateInSeconds: 5
+  objectToSpawn: {fileID: 0}
+  EnemiesLevelFactor: 10
+  maxEnemiesLevel: 5
+  minEnemiesLevel: 1
+  SpawnRateFactor: 10
+  spawnRateDecrement: 0.25
+  maxSpawnRateInSeconds: 3
   minSpawnRateInSeconds: 0.25
-  maxNumberToSpawn: 20
-  minNumberToSpawn: 3
+  EnemiesToSpawnFactor: 1
+  enemiesSpawnIncrement: 2
+  minNumberToSpawn: 5
+  EnemiesSpawnPerTimeFactor: 20
   minSpawnPerTime: 1
   maxSpawnPertime: 5
-  alertTime: 0
+  alertTime: 0.15
 --- !u!1 &1266836909
 GameObject:
   m_ObjectHideFlags: 0

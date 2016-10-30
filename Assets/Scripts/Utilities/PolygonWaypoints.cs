@@ -10,26 +10,17 @@ public class PolygonWaypoints : SpawnWayPoint {
            EnemyGenerator.GeneratePolygon(spawnData.enemyData, spawnData.position, Vector3.zero, Quaternion.identity);
     }
 
-    protected override Vector3 GetSpawningEnemyPosition(Bounds bound)
+    protected override List<SpawnData> GetCurrentSpawningList()
     {
-        return new Vector3
-            (
-                Random.Range(bound.min.x, bound.max.x),
-                Random.Range(bound.min.y, bound.max.y),
-                0
-            );
+        var retVal = new List<SpawnData>();
+
+        for(int i = 0; i < enemiesPerTime; i++)
+        {
+            var bound = wayPoints[currentWaypointIndex];
+            retVal.AddRange(GetSpawningDataList(bound, 1));
+            currentWaypointIndex = (currentWaypointIndex + 1) % wayPoints.Count;
+        }
+        return retVal;
     }
 
-	protected override List<SpawnData> GetCurrentSpawningList()
-	{
-		var retVal = new List<SpawnData>();
-
-		for (int i = 0; i < enemiesPerTime; i++)
-		{
-			var bound = wayPoints[currentWaypointIndex++ % wayPoints.Count];
-			retVal.AddRange(GetSpawningDataList(bound));
-		}
-
-		return retVal;
-	}
 }

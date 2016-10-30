@@ -6,6 +6,7 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
     protected int life;
     protected bool isImmortal;
 
+    public int damageDealtWhenHit;
     public float ImmortalTime;
 
     public virtual void Start()

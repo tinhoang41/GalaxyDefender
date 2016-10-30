@@ -33,7 +33,7 @@ public class PolygonCollisionHandler : EnemyCollisionHandler {
         for (int i = 0; i < childNumber; i++)
         {
             var degreeToRotate = degreeInc * i;
-            var rotation = Quaternion.identity;//.Euler(0.0f, 0.0f, -degreeToRotate);
+            var rotation = Quaternion.Euler(0 , 0, -degreeToRotate);//.Euler(0.0f, 0.0f, -degreeToRotate);
             var velocity = (Quaternion.Euler(0, 0, degreeToRotate) * Vector2.right);
             InitChild(transform.position, velocity, rotation);
         }
