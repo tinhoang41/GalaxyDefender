@@ -139,6 +139,7 @@ MonoBehaviour:
   maxSpeed: 10
   rotatingSpeed: 0.009
   waitTime: 1
+  loopTime: 0
 --- !u!114 &114000011769866558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b285e18ff20cb8c48a02f6f8d4b2a5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageDealtWhenHit: 10
   ImmortalTime: 0.5
 --- !u!212 &212000013851497482
 SpriteRenderer:

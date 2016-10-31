@@ -10,6 +10,9 @@ public class TriangleMover : SeekingMover {
     protected bool  reachBoundary;
     protected int   currentIndex;
     public    float    waitTime;
+
+	public int loopTime;
+
     protected override bool pRunCoroutine
     {
         get
@@ -34,7 +37,10 @@ public class TriangleMover : SeekingMover {
         currentIndex  = 1;
         destination   = anchorPoints[currentIndex];
         hasTarget     = true;
-        Debug.Log("Velocity: " + _velocity + " Speed : " + _currentSpeed + "Rotation: " + transform.rotation.eulerAngles);
+		var maxLevel = GetComponent<EnemyData> ().data.maxLevel;
+		var currentLevel = GetComponent<EnemyData> ().data.currentLevel;
+		loopTime      = Mathf.Max(currentLevel/ 2, 1);
+        //Debug.Log("Velocity: " + _velocity + " Speed : " + _currentSpeed + "Rotation: " + transform.rotation.eulerAngles);
     }
 
     protected void SetUpAnchorPoints()
@@ -90,8 +96,7 @@ public class TriangleMover : SeekingMover {
 
     IEnumerator MoveTriangle()
     {
-        var runTime = GetComponentInParent<EnemyData>().data.currentLevel;
-        while (true)
+		while (loopTime > 0)
         {
             if (reachBoundary)
             {
@@ -104,17 +109,17 @@ public class TriangleMover : SeekingMover {
                 {
                     yield return new WaitForSeconds(waitTime);
                     reachBoundary = false;
-                    runTime--;
+					loopTime--;
                 }
             }
             else
             {
 
                 Moving();
-                //Rotate();
                 yield return null;
             }
         }
+		Destroy (gameObject);
     }
 
 

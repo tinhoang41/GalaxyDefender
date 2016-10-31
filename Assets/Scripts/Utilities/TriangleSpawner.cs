@@ -86,6 +86,11 @@ public class TriangleSpawner : SpawnWayPoint {
         return (int)((length + gap) / (gap + triangleWidth));
     }
 
+	protected override void SpawnEnemy (SpawnData spawnData)
+	{
+		EnemyGenerator.GenerateTriangle(spawnData.enemyData, spawnData.position, Vector3.zero, spawnData.rotation);
+	}
+
     protected override void SpawnEnemies(List<SpawnData> dataList)
     {
         foreach (var spawnData in dataList)
@@ -124,7 +129,7 @@ public class TriangleSpawner : SpawnWayPoint {
         {
             var iPosition = new Vector3
                 (
-                    Random.Range(minValueOffset, maxValueOffset),
+					startingPoint.x,
                     startingPoint.y,
                     0
                 );
@@ -158,7 +163,7 @@ public class TriangleSpawner : SpawnWayPoint {
             var iPosition = new Vector3
                 (
                     startingPoint.x,
-                    Random.Range(minValueOffset, maxValueOffset),
+					startingPoint.y,
                     0
                 );
 

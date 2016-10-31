@@ -72,7 +72,7 @@ public class SpawnWayPoint : MonoBehaviour {
     
     protected virtual void Initialize()
     {
-        currentWave = 10;
+        currentWave = 9;
         currentWaypointIndex = 0;
         currentEnemiesSpawn  = 0;
         SetUpSpawningVariables();
@@ -89,6 +89,7 @@ public class SpawnWayPoint : MonoBehaviour {
 
     IEnumerator Spawning()
     {
+		//bool spawningList = false;
         var numEnemies = 0;
         while(isStillSpawning())
         {
@@ -96,7 +97,11 @@ public class SpawnWayPoint : MonoBehaviour {
             ShowAlertSpawning(spawnDataList);
             currentEnemiesSpawn += spawnDataList.Count;
             yield return new WaitForSeconds(alertTime);
-            SpawnEnemies(spawnDataList);
+			for (int i = 0; i < spawnDataList.Count; i++) {
+				SpawnEnemy (spawnDataList [i]);
+				yield return new WaitForSeconds (0.25f);
+			}
+            //SpawnEnemies(spawnDataList);
             yield return new WaitForSeconds(spawnRate);
             numEnemies++;
         }
@@ -104,6 +109,9 @@ public class SpawnWayPoint : MonoBehaviour {
 
     protected virtual void ShowAlertSpawning(List<SpawnData> dataList){}
 
+	protected virtual void SpawnEnemy(SpawnData dataList)
+	{
+	}
     protected virtual void SpawnEnemies(List<SpawnData> dataList)
     {
 

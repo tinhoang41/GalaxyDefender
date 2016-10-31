@@ -24,7 +24,7 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
 
     protected override bool ShouldDestroySelf(Collider2D other)
     {
-        life = IsValidCollision(other) ? life - 1 : life;
+		life = IsValidCollision(other) ? life - damageDealtWhenHit : life;
         return life <= 0;
     }
 

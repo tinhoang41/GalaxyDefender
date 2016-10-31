@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b285e18ff20cb8c48a02f6f8d4b2a5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImmortalTime: 0.5
+  damageDealtWhenHit: 10
+  ImmortalTime: 0
 --- !u!114 &114000013452838054
 MonoBehaviour:
   m_ObjectHideFlags: 1

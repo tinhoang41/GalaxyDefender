@@ -154,7 +154,7 @@ MonoBehaviour:
   minEnemiesLevel: 1
   SpawnRateFactor: 10
   spawnRateDecrement: 0.25
-  maxSpawnRateInSeconds: 4
+  maxSpawnRateInSeconds: 0.25
   minSpawnRateInSeconds: 0.15
   EnemiesToSpawnFactor: 10
   enemiesSpawnIncrement: 5
@@ -499,7 +499,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 492854737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.23, y: 1.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
