@@ -12,7 +12,7 @@ public class PolygonCollisionHandler : EnemyCollisionHandler {
     public override void Start()
     {
         base.Start();
-        var currentLevel = GetComponent<EnemyData>().data.currentLevel;
+        var currentLevel = GetComponent<EnemyData>().pData.currentLevel;
         childLevel       = Mathf.Max(currentLevel / 2, 1);
         childNumber      = (int)Mathf.Clamp(CHILD_MULTIPLIER * currentLevel, MIN_CHILD, MAX_CHILD);
     }

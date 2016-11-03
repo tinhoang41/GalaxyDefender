@@ -3,16 +3,17 @@ using System.Collections;
 
 public class EnemyCollisionHandler : CollisionHandlerBase {
 
-    protected int life;
     protected bool isImmortal;
-
+    protected EnemyData enemyData;
+    protected ColorChanger colorChanger;
     public int damageDealtWhenHit;
     public float ImmortalTime;
 
     public virtual void Start()
     {
-        life       = GetComponent<EnemyData>().data.currentLevel;
-        isImmortal = true;
+        enemyData    = GetComponent<EnemyData>();
+        colorChanger = GetComponent<ColorChanger>();
+        isImmortal   = true;
         StartCoroutine("waitForImmortal");
     }
 
@@ -24,8 +25,14 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
 
     protected override bool ShouldDestroySelf(Collider2D other)
     {
-		life = IsValidCollision(other) ? life - damageDealtWhenHit : life;
-        return life <= 0;
+        if (IsValidCollision(other))
+        {
+            enemyData.AddDamage(damageDealtWhenHit);
+            if(colorChanger != null)
+             colorChanger.ChangeColor();
+
+        }
+        return enemyData.pCurrentLife <= 0;
     }
 
     protected override bool ShouldDestroyOther(Collider2D other)

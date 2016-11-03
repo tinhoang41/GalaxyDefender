@@ -18,10 +18,8 @@ public class BulletMover : GameObjectMover
         _velocity = transform.rotation * new Vector3(0, _initialSpeed, 0);
     }
 
-    protected override void UpdateVelocity()
+    protected override void LimitPosition()
     {
-        _velocity = pReachVerticalBoundary ? Vector3.Scale(_velocity, new Vector3(1, -1, 1)) : pReachHorizontalBoundary ? Vector3.Scale(_velocity, new Vector3(-1, 1, 1)) : _velocity;
-        base.UpdateVelocity();
     }
 
 }

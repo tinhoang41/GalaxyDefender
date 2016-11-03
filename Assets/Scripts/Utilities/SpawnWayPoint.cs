@@ -34,7 +34,7 @@ public class SpawnWayPoint : MonoBehaviour {
 
     public List<WayPointData>  wayPoints;
     public GameObject 		   objectToSpawn;
-
+    public int           currentLevel;
     public int 			 EnemiesLevelFactor;
     public int 			 maxEnemiesLevel;
     public int 			 minEnemiesLevel;
@@ -72,7 +72,7 @@ public class SpawnWayPoint : MonoBehaviour {
     
     protected virtual void Initialize()
     {
-        currentWave = 9;
+        currentWave = currentLevel  ;
         currentWaypointIndex = 0;
         currentEnemiesSpawn  = 0;
         SetUpSpawningVariables();
@@ -81,15 +81,23 @@ public class SpawnWayPoint : MonoBehaviour {
 
     protected virtual void SetUpSpawningVariables()
     {
-        EvaluateEnemiesSpawn ();
+        EvaluateEnemiesLevel();
+        EvaluateEnemiesSpawn();
         EvaluateSpawnPerTime ();
         EvaluateSpawnRate ();
-        EvaluateEnemiesLevel ();
+    }
+
+    public void UpdateWaveData()
+    {
+        currentWave++;
+        currentWaypointIndex = 0;
+        currentEnemiesSpawn = 0;
+        SetUpSpawningVariables();
     }
 
     IEnumerator Spawning()
     {
-		//bool spawningList = false;
+        //bool spawningList = false;
         var numEnemies = 0;
         while(isStillSpawning())
         {
@@ -97,11 +105,7 @@ public class SpawnWayPoint : MonoBehaviour {
             ShowAlertSpawning(spawnDataList);
             currentEnemiesSpawn += spawnDataList.Count;
             yield return new WaitForSeconds(alertTime);
-			for (int i = 0; i < spawnDataList.Count; i++) {
-				SpawnEnemy (spawnDataList [i]);
-				yield return new WaitForSeconds (0.25f);
-			}
-            //SpawnEnemies(spawnDataList);
+            yield return StartCoroutine("SpawnEnemies", spawnDataList);// SpawnEnemies(spawnDataList);
             yield return new WaitForSeconds(spawnRate);
             numEnemies++;
         }
@@ -109,12 +113,12 @@ public class SpawnWayPoint : MonoBehaviour {
 
     protected virtual void ShowAlertSpawning(List<SpawnData> dataList){}
 
-	protected virtual void SpawnEnemy(SpawnData dataList)
-	{
-	}
-    protected virtual void SpawnEnemies(List<SpawnData> dataList)
+    protected virtual void SpawnEnemy(SpawnData dataList)
     {
-
+    }
+    protected virtual IEnumerator SpawnEnemies(List<SpawnData> dataList)
+    {
+        yield return null;
     }
 
     protected virtual List<Vector3> GetSpawningEnemyPosition(Bounds bound, int num)
@@ -155,6 +159,13 @@ public class SpawnWayPoint : MonoBehaviour {
     protected virtual List<SpawnData> GetCurrentSpawningList()
     {
         var retVal = new List<SpawnData>();
+
+        for (int i = 0; i < enemiesPerTime; i++)
+        {
+            var bound = wayPoints[currentWaypointIndex];
+            retVal.AddRange(GetSpawningDataList(bound, 1));
+            currentWaypointIndex = (currentWaypointIndex + 1) % wayPoints.Count;
+        }
         return retVal;
     }
 

@@ -3,19 +3,30 @@ using System.Collections;
 
 public class EnemyData : MonoBehaviour {
 
-    public EnemyDataParameter data;
+    private EnemyDataParameter data;
+    private int maxLife;
+    private int currentLife;
 
-    public EnemyData(int min, int max, int current)
+    public EnemyDataParameter pData
     {
-        data.minLevel = min;
-        data.maxLevel = max;
-        data.currentLevel = current;
+        get { return data; }
     }
-    // Use this for initialization
-    void Start () {
 
+    public int pMaxlife
+    {
+        get { return maxLife; }
     }
-    
+
+    public int pCurrentLife
+    {
+        get { return currentLife; }
+    }
+
+    void Start()
+    {
+        maxLife     = data.maxLevel;
+        currentLife = data.currentLevel;
+    }
     public virtual void Initialize(int min, int max, int current)
     {
         data.minLevel     = min;
@@ -33,5 +44,11 @@ public class EnemyData : MonoBehaviour {
     public EnemyDataParameter GetData()
     {
         return data;
+    }
+
+    public void AddDamage(int damageDealt)
+    {
+        currentLife -= damageDealt;
+        Mathf.Max(currentLife, 0);
     }
 }

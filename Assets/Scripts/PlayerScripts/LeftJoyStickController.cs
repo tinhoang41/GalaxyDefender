@@ -19,6 +19,10 @@ public class LeftJoyStickController : ShooterBase
     {
         // Left Stick Control
         CheckShooting();
+        if (Input.GetKeyDown(KeyCode.Space) && !isSpraying)
+            StartCoroutine("Splash");
+
+
     }
 
     #region Left stick controls
@@ -35,8 +39,9 @@ public class LeftJoyStickController : ShooterBase
     {
         var degreeInc = 360.0f / numberSprayPerRound;
         var diff = degreeInc;
+        var num = numberOfRound;
         isSpraying = true;
-        while(numberOfRound >= 0)
+        while(num >= 0)
         {
             for (int i = 0; i < numberSprayPerRound; i++)
             {
@@ -45,7 +50,29 @@ public class LeftJoyStickController : ShooterBase
                 var velocity = (Quaternion.Euler(0, 0, degreeToRotate) * Vector2.right);
                 ShootBullet(velocity);
             }
-            numberOfRound--;
+            num--;
+            yield return new WaitForSeconds(fireRate);
+        }
+        isSpraying = false;
+    }
+
+    IEnumerator Splash()
+    {
+        var degreeInc = 360.0f / numberSprayPerRound;
+        var diff = degreeInc;
+        var num = numberOfRound;
+        isSpraying = true;
+        while (num >= 0)
+        {
+            for (int i = 0; i < numberSprayPerRound; i++)
+            {
+                var degreeToRotate = (degreeInc * i) + (numberOfRound % 2) * diff;
+                var rotation = Quaternion.identity;//.Euler(0.0f, 0.0f, -degreeToRotate);
+                var velocity = (Quaternion.Euler(0, 0, degreeToRotate) * Vector2.right);
+                ShootBullet(velocity);
+                yield return new WaitForSeconds(0.005f);
+            }
+            num--;
             yield return new WaitForSeconds(fireRate);
         }
         isSpraying = false;

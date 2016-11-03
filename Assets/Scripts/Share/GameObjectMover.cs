@@ -152,9 +152,9 @@ public class GameObjectMover : MonoBehaviour {
     protected virtual void SetUpVariablesBasedOnData()
     {
         var enemyData        = GetComponent<EnemyData>();
-        var maxLevel         = enemyData.data.maxLevel;
-        var minLevel         = enemyData.data.minLevel;
-        var currentLevel     = enemyData.data.currentLevel;
+        var maxLevel         = enemyData.pData.maxLevel;
+        var minLevel         = enemyData.pData.minLevel;
+        var currentLevel     = enemyData.pData.currentLevel;
         var fraction         = currentLevel / (float)(maxLevel - minLevel);
 
         _initialSpeed        = GetFractionalValue(minSpeed, maxSpeed, fraction);
@@ -167,7 +167,8 @@ public class GameObjectMover : MonoBehaviour {
     {
         return min + (fraction * (max - min));
     }
-    void LimitPosition()
+
+    protected virtual void LimitPosition()
     {
         Vector3 currentPosition = transform.position;
         var xPos = Mathf.Clamp(currentPosition.x, _boundary.min.x, _boundary.max.x);
