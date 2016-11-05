@@ -44,7 +44,6 @@ public class PolygonMover : SeekingMover {
 
     IEnumerator MovePolygon()
     {
-        Debug.Log("Start polygon coroutine");
         while(true)
         {
             if (isWaiting)

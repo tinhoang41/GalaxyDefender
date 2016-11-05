@@ -106,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAcceleration: 0
   minAcceleration: 0
-  minSpeed: 5
+  minSpeed: 8
   maxSpeed: 10
   rotatingSpeed: 1
 --- !u!114 &11455606
@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8440584c4504324597edcb92a3b6c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRed: 200
-  minBlue: 200
-  minGreen: 155
+  minRed: 50
+  minBlue: 50
+  minGreen: 50
   useRandomColor: 1
 --- !u!212 &21255234
 SpriteRenderer:

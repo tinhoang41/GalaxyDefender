@@ -19,8 +19,9 @@ public class LeftJoyStickController : ShooterBase
     {
         // Left Stick Control
         CheckShooting();
-        if (Input.GetKeyDown(KeyCode.Space) && !isSpraying)
-            StartCoroutine("Splash");
+		if (Input.GetKeyUp(KeyCode.Space) && !isSpraying) {
+			StartCoroutine("Spray");
+		}
 
 
     }

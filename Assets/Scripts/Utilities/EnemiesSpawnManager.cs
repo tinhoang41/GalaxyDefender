@@ -6,6 +6,7 @@ public class EnemiesSpawnManager : MonoBehaviour {
 
     protected Dictionary<WaveType, List<SpawnWayPoint>> spawnerForWaveTable;
     // Use this for initialization
+	protected List<SpawnWayPoint> currenSpawners;	
     void Start ()
     {
         SetUpTable();
@@ -16,6 +17,36 @@ public class EnemiesSpawnManager : MonoBehaviour {
     
     }
 
+	public void EndWave()
+	{
+		foreach (var spawner in currenSpawners)
+			spawner.Stop();
+	}
+
+	public bool isFinished()
+	{
+		foreach (var spawner in currenSpawners)
+			if (!spawner.pIsFinishedSpawning)
+				return false;
+		return true;
+	}
+
+	public void StartNewWave(WaveType waveType)
+	{
+		if (!spawnerForWaveTable.TryGetValue (waveType, out currenSpawners))
+			return;
+		foreach (var spawner in currenSpawners) 
+		{
+			spawner.UpdateWaveData ();
+			spawner.Run ();
+		}
+	}
+
+	public void Cleanup()
+	{
+		
+	}
+
     protected void SetUpTable()
     {
         spawnerForWaveTable = new Dictionary<WaveType, List<SpawnWayPoint>>();
@@ -25,7 +56,7 @@ public class EnemiesSpawnManager : MonoBehaviour {
             spawnerForWaveTable.Add(i, spawnerList);
         }
     }
-
+		
     protected List<SpawnWayPoint> GetSpawner(WaveType type)
     {
         var retVal = new List<SpawnWayPoint>();

@@ -59,7 +59,7 @@ public class GameObjectMover : MonoBehaviour {
     #region Methods
     public virtual void Update()
     {
-        if (!pRunCoroutine)
+		if (!pRunCoroutine && Time.timeScale != 0)
         {
             Moving();
             Rotate();
@@ -139,7 +139,7 @@ public class GameObjectMover : MonoBehaviour {
 
     protected virtual void UpdateRotation()
     {
-        if (_isRotating)
+		if (_isRotating && Time.timeScale != 0)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, _directionToRotate, rotatingSpeed * Time.time);
             _isRotating = (transform.rotation.eulerAngles - _directionToRotate.eulerAngles).magnitude >= 0.05f;
