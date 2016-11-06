@@ -643,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62225210aba3b4fda8b89056fbc3670f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lerpTime: 0.5
   colorsToChange:
   - {r: 0.9558824, g: 0.45685554, b: 0.45685554, a: 1}
   - {r: 0.5182201, g: 0.75706965, b: 0.99264705, a: 1}
@@ -651,7 +652,6 @@ MonoBehaviour:
   - {r: 0.7334559, g: 0.97794116, b: 0.97794116, a: 1}
   - {r: 0.7592433, g: 0.6543577, b: 0.97794116, a: 1}
   - {r: 0.9705882, g: 0.6066176, b: 0.93592656, a: 1}
-  timeFrame: 0.1
 --- !u!114 &492854740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,14 +761,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 492854737}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee155b1a48ccf4cf3bd58d3e2399e51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  immortalTimeForRecovering: 0
-  immortalTimeFromItem: 0
-  defaultLives: 0
+  immortalTimeForRecovering: 0.5
+  immortalTimeFromItem: 5
+  defaultLives: 10
 --- !u!1 &708654888
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +979,7 @@ GameObject:
   - 61: {fileID: 1050771877}
   - 114: {fileID: 1050771876}
   - 114: {fileID: 1050771879}
+  - 114: {fileID: 1050771880}
   m_Layer: 0
   m_Name: Boundary
   m_TagString: Boundary
@@ -1056,10 +1057,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a19b5a1cd8373f4c9d1ffb90d5e433f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRed: 100
-  minBlue: 100
-  minGreen: 100
-  LerpTime: 1
+  lerpTime: 2
+--- !u!114 &1050771880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050771874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdce58b91c157a94e994321bba20ee04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRed: 125
+  minBlue: 125
+  minGreen: 125
 --- !u!1 &1126922520
 GameObject:
   m_ObjectHideFlags: 0

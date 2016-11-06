@@ -17,5 +17,6 @@ public class DestroyByContact : MonoBehaviour {
     {
         if (other.tag == "Bullet" || other.tag == "Boundary")
             return;
+		GetComponent<PlayerData> ().ApplyDamage (1);
     }
 }

@@ -9,6 +9,7 @@ public class PolygonCollisionHandler : EnemyCollisionHandler {
     private int   childNumber;
 
     private int childLevel;
+
     public override void Start()
     {
         base.Start();
@@ -16,6 +17,7 @@ public class PolygonCollisionHandler : EnemyCollisionHandler {
         childLevel       = Mathf.Max(currentLevel / 2, 1);
         childNumber      = (int)Mathf.Clamp(CHILD_MULTIPLIER * currentLevel, MIN_CHILD, MAX_CHILD);
     }
+
     protected override void ActionAfterDestroySelf(Collider2D other)
     {
         base.ActionAfterDestroySelf(other);

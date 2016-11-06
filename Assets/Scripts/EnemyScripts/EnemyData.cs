@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyData : MonoBehaviour {
+public class EnemyData : ActorData {
 
     private EnemyDataParameter data;
     private int maxLife;
-    private int currentLife;
+	public float immortalTimeWhenSpawn;
 
     public EnemyDataParameter pData
     {
@@ -17,16 +17,26 @@ public class EnemyData : MonoBehaviour {
         get { return maxLife; }
     }
 
-    public int pCurrentLife
+    public int pCurrentLives
     {
-        get { return currentLife; }
+		get { return currentLives; }
     }
 
-    void Start()
-    {
+	public bool pIsImmortal
+	{
+		get { return isImmortal; }
+	}
+
+	protected override void Initialize ()
+	{
+		base.Initialize ();
         maxLife     = data.maxLevel;
-        currentLife = data.currentLevel;
+		currentLives = data.currentLevel;
+		isImmortal = true;
+		immortalTime = immortalTimeWhenSpawn;
+		StartCoroutine ("RunImmortality", ImmortalType.SPAWNING);
     }
+
     public virtual void Initialize(int min, int max, int current)
     {
         data.minLevel     = min;
@@ -44,11 +54,5 @@ public class EnemyData : MonoBehaviour {
     public EnemyDataParameter GetData()
     {
         return data;
-    }
-
-    public void AddDamage(int damageDealt)
-    {
-        currentLife -= damageDealt;
-        Mathf.Max(currentLife, 0);
     }
 }

@@ -9,7 +9,7 @@ public class RandomColorGenerator : MonoBehaviour {
     public int minBlue;
     public int minGreen;
 
-    protected Color GetRandomColor()
+    public Color GetRandomColor()
     {
         return new Color
             (

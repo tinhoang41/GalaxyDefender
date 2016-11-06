@@ -1,29 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum ImmortalType :ushort
-{
-	RECOVERING = 0,
-	ITEM = 1,
-}
-public class PlayerData : MonoBehaviour {
+
+public class PlayerData : ActorData {
 
 	public float immortalTimeForRecovering;
 	public float immortalTimeFromItem;
-	public int defaultLives;
+	public int   defaultLives;
 
-	private int currentLives;
-	private float immortalTime;
-	// become immortal when got hit or get items
-	private bool isImmortal;
+	protected PlayerColorChanger colorChanger;
 
-	public void ApplyDamage(int damage)
+	public override void ApplyDamage(int damage)
 	{
 		if (isImmortal)
 			return;
 		
-		currentLives -= damage;
-		Mathf.Max (currentLives, 0);
+		base.ApplyDamage (damage);
+
 		if (currentLives > 0) 
 		{
 			isImmortal = true;
@@ -32,26 +25,16 @@ public class PlayerData : MonoBehaviour {
 		}
 	}
 
-	IEnumerator RunImmortality(ImmortalType immortalType)
+	protected override void SwitchColor (ImmortalType immortalType)
 	{
-		Debug.Assert (!isImmortal);
-		var currentTime = 0.0f;
-		while (currentTime >= immortalTime)
-		{
-			currentTime += Time.deltaTime;
-			yield return null;
-		}
-		isImmortal = false;
+		colorChanger.ChangePlayerColor (immortalType, immortalTime);
 	}
 
-
-	// Use this for initialization
-	void Start () {
+	protected override void Initialize ()
+	{
+		base.Initialize ();
 		currentLives = defaultLives;
+		colorChanger = GetComponent<PlayerColorChanger> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

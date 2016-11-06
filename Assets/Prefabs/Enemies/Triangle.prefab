@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9bdcc2fa3ff48f4bad68948b38ac3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalTimeWhenSpawn: 0.15
 --- !u!114 &114000014136781226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,7 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageDealtWhenHit: 10
-  ImmortalTime: 0.5
 --- !u!212 &212000013851497482
 SpriteRenderer:
   m_ObjectHideFlags: 1

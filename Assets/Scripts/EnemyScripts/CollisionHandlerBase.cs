@@ -1,7 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CollisionHandlerBase : MonoBehaviour {
+public abstract class CollisionHandlerBase : MonoBehaviour {
+
+	protected ActorData objectData;
+
+	public virtual void Start()
+	{
+		GetObjectData();	
+	}
+
+	protected abstract void GetObjectData ();
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
