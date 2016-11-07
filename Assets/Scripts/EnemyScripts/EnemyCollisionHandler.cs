@@ -4,19 +4,19 @@ using System.Collections;
 public class EnemyCollisionHandler : CollisionHandlerBase {
 
     protected EnemyData enemyData;
-	protected EnemyColorChanger colorChanger;
+    protected EnemyColorChanger colorChanger;
     public int damageDealtWhenHit;
 
-	protected override void GetObjectData ()
-	{
-		enemyData = GetComponent<EnemyData> ();
-	}
-
-	public override void Start()
+    protected override void GetObjectData ()
     {
-		base.Start ();
+        enemyData = GetComponent<EnemyData> ();
+    }
+
+    public override void Start()
+    {
+        base.Start ();
         enemyData    = GetComponent<EnemyData>();
-		colorChanger = GetComponent<EnemyColorChanger>();
+        colorChanger = GetComponent<EnemyColorChanger>();
     }
 
 
@@ -24,7 +24,7 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
     {
         if (IsValidCollision(other))
         {
-			enemyData.ApplyDamage(damageDealtWhenHit);
+            enemyData.ApplyDamage(damageDealtWhenHit);
             if(colorChanger != null)
              colorChanger.ChangeColor();
 
@@ -47,6 +47,6 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
 
     protected virtual bool IsValidCollision(Collider2D other)
     {
-		return enemyData && (other.tag == "Bullet" || other.tag == "Player");
+        return !enemyData.pIsImmortal && (other.tag == "Bullet" || other.tag == "Player");
     }
 }

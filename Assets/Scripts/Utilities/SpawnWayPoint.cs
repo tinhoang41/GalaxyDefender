@@ -63,12 +63,12 @@ public class SpawnWayPoint : MonoBehaviour {
     protected int        currentWaypointIndex;
     protected int        currentEnemiesSpawn;
     protected int 	     enemiesLevel;
-	protected bool 	     isFinishedSpawning;
+    protected bool 	     isFinishedSpawning;
 
-	public bool pIsFinishedSpawning
-	{
-		get{return isFinishedSpawning;}
-	}
+    public bool pIsFinishedSpawning
+    {
+        get{return isFinishedSpawning;}
+    }
 
     // Use this for initialization
     void Start ()
@@ -77,28 +77,29 @@ public class SpawnWayPoint : MonoBehaviour {
         //StartCoroutine("Spawning");
     }
 
-	public void Run()
-	{
-		StartCoroutine ("Spawning");
-	}
+    public void Run()
+    {
+        StartCoroutine ("Spawning");
+    }
 
-	public void Stop()
-	{
-		StopAllCoroutines ();
-	}
+    public void Stop()
+    {
+        StopAllCoroutines ();
+    }
 
     protected virtual void Initialize()
     {
-        currentWave = currentLevel;
+        currentWave          = 0;
         currentWaypointIndex = 0;
         currentEnemiesSpawn  = 0;
+        isFinishedSpawning   = true;
         SetUpSpawningVariables();
 
     }
 
     protected virtual void SetUpSpawningVariables()
     {
-		isFinishedSpawning = false;
+        isFinishedSpawning = false;
         EvaluateEnemiesLevel();
         EvaluateEnemiesSpawn();
         EvaluateSpawnPerTime ();
@@ -127,7 +128,7 @@ public class SpawnWayPoint : MonoBehaviour {
             yield return new WaitForSeconds(spawnRate);
             numEnemies++;
         }
-		isFinishedSpawning = true;
+        isFinishedSpawning = true;
     }
 
     protected virtual void ShowAlertSpawning(List<SpawnData> dataList){}

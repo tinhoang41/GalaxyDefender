@@ -25,7 +25,7 @@ public class TriangleSpawner : SpawnWayPoint {
 
     private float horizontalSpawnLength;
     private float verticalSpawnLength;
-	private float timeForWave;
+    private float timeForWave;
 
     protected override void Initialize()
     {
