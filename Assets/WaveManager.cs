@@ -6,7 +6,7 @@ public class WaveManager : MonoBehaviour {
 
     public GameObject enemiesSpawn;
     public GameObject itemsSpawn;
-
+	public int deBugWaveNumber;
     public List<WaveData> waveInfo;
 
     protected int currentWave;
@@ -15,9 +15,10 @@ public class WaveManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        currentWave = 0;
+		currentWave = deBugWaveNumber;
         enemiesSpawnManager = enemiesSpawn.GetComponent<EnemiesSpawnManager>();
-        enemiesSpawnManager.Initialize(waveInfo);
+		enemiesSpawnManager.Initialize (waveInfo);
+		enemiesSpawnManager.InitWaveNumber (currentWave);
     }
     
 
@@ -40,7 +41,7 @@ public class WaveManager : MonoBehaviour {
 
     protected WaveType GetWaveType()
     {
-        return currentWave % 2 == 0 ? WaveType.DODGE : WaveType.KILL;
+		return WaveType.DODGE; //currentWave % 2 == 1 ? WaveType.DODGE : WaveType.KILL;
     }
 
     protected void StartWave()

@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 public class TriangleSpawner : SpawnWayPoint {
 
+	protected const float MAX_PERCENT_SPAWN = 0.6f;
+
     public float offsetTimer;
     public float EnemiesToSpawnIncrement;
+	public float minimumDuration;
+	public float durationIncrement;
+	public float durationIncrementFactor;
     protected int maxSpawnHorizontal;
     protected int maxSpawnVertical;
 
@@ -30,7 +35,7 @@ public class TriangleSpawner : SpawnWayPoint {
     protected override void Initialize()
     {
         player        = GameObject.FindWithTag("Player");
-        gap           = player.GetComponentInChildren<SpriteRenderer>().bounds.size.x * 1.350f;
+        gap           = player.GetComponentInChildren<SpriteRenderer>().bounds.size.x * 0.150f;
         triangleWidth = objectToSpawn.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
 
         base.Initialize();
@@ -71,7 +76,7 @@ public class TriangleSpawner : SpawnWayPoint {
     {
         enemiesToSpawn           = 0;
         var percent             = (float)(((currentWave / EnemiesToSpawnFactor) + 1 ) * EnemiesToSpawnIncrement);
-        enemiesToSpawnPercentage = Mathf.Clamp(percent, 0.1f, 0.9f);
+		enemiesToSpawnPercentage = Mathf.Clamp(percent, EnemiesToSpawnIncrement, MAX_PERCENT_SPAWN);
     }
 
     protected override void EvaluateSpawnRate ()
@@ -82,6 +87,7 @@ public class TriangleSpawner : SpawnWayPoint {
     protected override void EvaluateSpawnPerTime ()
     {
         enemiesPerTime = Mathf.Min(currentWave / EnemiesSpawnPerTimeFactor + 1, 4);
+		timeForWave = minimumDuration + currentWave / durationIncrementFactor * durationIncrement;
     }
 
     protected override void EvaluateEnemiesLevel ()
@@ -93,7 +99,7 @@ public class TriangleSpawner : SpawnWayPoint {
 
     private int GetTriangleNumber(float length)
     {
-        return Mathf.RoundToInt((length  ) / (gap + triangleWidth));
+        return Mathf.RoundToInt(length / (gap + triangleWidth));
     }
 
     protected override void SpawnEnemy (SpawnData spawnData)
@@ -136,9 +142,9 @@ public class TriangleSpawner : SpawnWayPoint {
                    0
             );
 
-        var startingPoint = centerToSpawn + ((decrementVector * -1) * (verticalSpawnLength / 2.0f));
+		var startingPoint = centerToSpawn + ((decrementVector * -1) * (verticalSpawnLength / 2.0f)) + ((decrementVector * -1) * (triangleWidth / 2.0f)) ;
 
-        for (int i = 0; i <= verticalSpawningNumber; i++)
+        for (int i = 0; i < verticalSpawningNumber; i++)
         {
             var iPosition = new Vector3
                 (

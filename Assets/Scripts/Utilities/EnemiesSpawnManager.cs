@@ -31,6 +31,14 @@ public class EnemiesSpawnManager : MonoBehaviour {
         currenSpawners = new List<SpawnWayPoint>();
     }
 
+	public void InitWaveNumber(int waveNumber)
+	{
+		foreach (var spawnerList in spawnerForWaveTable.Values)
+		{
+			foreach (var spawner in spawnerList)
+				spawner.currentLevel = waveNumber;
+		}
+	}
     public void EndWave()
     {
         foreach (var spawner in currenSpawners)

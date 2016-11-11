@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesSpawn: {fileID: 444218587}
   itemsSpawn: {fileID: 780190300}
+  deBugWaveNumber: 45
   waveInfo:
   - waveType: 0
     enemies: 0200000000000000
@@ -506,8 +507,11 @@ MonoBehaviour:
   minSpawnPerTime: 1
   maxSpawnPertime: 1
   alertTime: 0.25
-  offsetTimer: 0.25
+  offsetTimer: 0.15
   EnemiesToSpawnIncrement: 0.15
+  minimumDuration: 10
+  durationIncrement: 5
+  durationIncrementFactor: 1
 --- !u!114 &444218590
 MonoBehaviour:
   m_ObjectHideFlags: 0

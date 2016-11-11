@@ -89,7 +89,7 @@ public class SpawnWayPoint : MonoBehaviour {
 
     protected virtual void Initialize()
     {
-        currentWave          = 0;
+        currentWave          = 45;
         currentWaypointIndex = 0;
         currentEnemiesSpawn  = 0;
         isFinishedSpawning   = true;
