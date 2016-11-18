@@ -6,6 +6,11 @@ public class DiamondSpawner : SpawnWayPoint
 {
     public List<WayPointData> antiCornersWaypoints;
     protected GameObject player;
+    public override EnemyType pEnemyTypeForSpawning
+    {
+        get { return EnemyType.DIAMOND; }
+    }
+
 
     public bool pPlayerHidesInCorner
     {

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class TriangleSpawner : SpawnWayPoint {
 
-	protected const float MAX_PERCENT_SPAWN = 0.6f;
+    protected const float MAX_PERCENT_SPAWN = 0.6f;
 
     public float offsetTimer;
     public float EnemiesToSpawnIncrement;
-	public float minimumDuration;
-	public float durationIncrement;
-	public float durationIncrementFactor;
+    public float minimumDuration;
+    public float durationIncrement;
+    public float durationIncrementFactor;
     protected int maxSpawnHorizontal;
     protected int maxSpawnVertical;
 
@@ -31,6 +31,11 @@ public class TriangleSpawner : SpawnWayPoint {
     private float horizontalSpawnLength;
     private float verticalSpawnLength;
     private float timeForWave;
+
+    public override EnemyType pEnemyTypeForSpawning
+    {
+        get { return EnemyType.TRIANGLE; }
+    }
 
     protected override void Initialize()
     {
@@ -76,7 +81,7 @@ public class TriangleSpawner : SpawnWayPoint {
     {
         enemiesToSpawn           = 0;
         var percent             = (float)(((currentWave / EnemiesToSpawnFactor) + 1 ) * EnemiesToSpawnIncrement);
-		enemiesToSpawnPercentage = Mathf.Clamp(percent, EnemiesToSpawnIncrement, MAX_PERCENT_SPAWN);
+        enemiesToSpawnPercentage = Mathf.Clamp(percent, EnemiesToSpawnIncrement, MAX_PERCENT_SPAWN);
     }
 
     protected override void EvaluateSpawnRate ()
@@ -87,7 +92,7 @@ public class TriangleSpawner : SpawnWayPoint {
     protected override void EvaluateSpawnPerTime ()
     {
         enemiesPerTime = Mathf.Min(currentWave / EnemiesSpawnPerTimeFactor + 1, 4);
-		timeForWave = minimumDuration + currentWave / durationIncrementFactor * durationIncrement;
+        timeForWave = minimumDuration + currentWave / durationIncrementFactor * durationIncrement;
     }
 
     protected override void EvaluateEnemiesLevel ()
@@ -142,7 +147,7 @@ public class TriangleSpawner : SpawnWayPoint {
                    0
             );
 
-		var startingPoint = centerToSpawn + ((decrementVector * -1) * (verticalSpawnLength / 2.0f)) + ((decrementVector * -1) * (triangleWidth / 2.0f)) ;
+        var startingPoint = centerToSpawn + ((decrementVector * -1) * (verticalSpawnLength / 2.0f)) + (decrementVector  * (triangleWidth / 2.0f)) ;
 
         for (int i = 0; i < verticalSpawningNumber; i++)
         {
@@ -174,9 +179,9 @@ public class TriangleSpawner : SpawnWayPoint {
                    0
             );
 
-        var startingPoint = centerToSpawn + ((decrementVector * -1) * (horizontalSpawnLength / 2.0f));
+        var startingPoint = centerToSpawn + ((decrementVector * -1) * (horizontalSpawnLength / 2.0f)) + (decrementVector * (triangleWidth / 2.0f));
 
-        for (int i = 0; i <= horizontalSpawningNumber; i++)
+        for (int i = 0; i < horizontalSpawningNumber; i++)
         {
             var iPosition = new Vector3
                 (
@@ -199,6 +204,11 @@ public class TriangleSpawner : SpawnWayPoint {
 
     protected override bool isStillSpawning()
     {
-        return true;
+        return totalTime <= timeForWave;
+    }
+
+    public float GetRemaindingTime()
+    {
+        return Mathf.Max(timeForWave - totalTime, 0.0f);
     }
 }

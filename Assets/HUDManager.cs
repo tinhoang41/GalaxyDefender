@@ -17,15 +17,25 @@ public class HUDManager : MonoBehaviour {
     
     }
 
-    void UpdateLiveText(int currentLives)
+    public void ResetHint()
+    {
+        hintText.GetComponent<Text>().text = "";
+    }
+
+    public void UpdateHintText(string newText)
+    {
+        hintText.GetComponent<Text>().text = newText;
+    }
+
+    public void UpdateLiveText(int currentLives)
     {
         var currentText = liveText.GetComponent<Text>();
         currentText.text = "Live " + currentLives;
     }
 
-    void UpdateCurrentWave(int currentLives)
+    public void UpdateCurrentWave(int currentWave)
     {
-        var currentText = liveText.GetComponent<Text>();
-        currentText.text = "Live " + currentLives;
+        currentWaveText.GetComponent<Text>().text = "Wave : " + currentWave;
+
     }
 }

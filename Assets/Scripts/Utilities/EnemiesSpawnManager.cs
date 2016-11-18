@@ -31,14 +31,14 @@ public class EnemiesSpawnManager : MonoBehaviour {
         currenSpawners = new List<SpawnWayPoint>();
     }
 
-	public void InitWaveNumber(int waveNumber)
-	{
-		foreach (var spawnerList in spawnerForWaveTable.Values)
-		{
-			foreach (var spawner in spawnerList)
-				spawner.currentLevel = waveNumber;
-		}
-	}
+    public void InitWaveNumber(int waveNumber)
+    {
+        foreach (var spawnerList in spawnerForWaveTable.Values)
+        {
+            foreach (var spawner in spawnerList)
+                spawner.currentLevel = waveNumber;
+        }
+    }
     public void EndWave()
     {
         foreach (var spawner in currenSpawners)
@@ -102,27 +102,38 @@ public class EnemiesSpawnManager : MonoBehaviour {
         return retVal;
     }
 
-    protected List<SpawnWayPoint> GetSpawner(WaveType type)
+    public string GetCurrentWaveHint(WaveType currentWaveType)
     {
-        var retVal = new List<SpawnWayPoint>();
-        switch (type)
+        var retVal = "";
+        switch(currentWaveType)
         {
             case WaveType.KILL:
-                {
-                    retVal.Add(GetComponent<PolygonWaypoints>());
-                    retVal.Add(GetComponent<DiamondSpawner>());
-
-                    break;
-                }
+                retVal = "Kill all enemies";
+                break;
             case WaveType.DODGE:
                 {
-                    retVal.Add(GetComponent<TriangleSpawner>());
+                    var remainTime = GetComponent<TriangleSpawner>().GetRemaindingTime();
+                    retVal = "Time: " + remainTime.ToString("00.##") + " s";
                     break;
                 }
-            default:
-                break;
         }
-
         return retVal;
+    }
+
+    public void AddNewSpawner(WaveType waveType, EnemyType enemyTypeToSpawn)
+    {
+        var spawnerListForWaveType = spawnerForWaveTable[waveType];
+        if (DidContainSpawner(spawnerListForWaveType, enemyTypeToSpawn))
+            return;
+        spawnerListForWaveType.Add(GetSpawnerBasedOnType(enemyTypeToSpawn));
+    }
+
+    bool DidContainSpawner(List<SpawnWayPoint> spawnersList, EnemyType enemyTypeToSpawn)
+    {
+        foreach (var spawner in spawnersList)
+            if (spawner.pEnemyTypeForSpawning == enemyTypeToSpawn)
+                return true;
+        return false;
+       
     }
 }

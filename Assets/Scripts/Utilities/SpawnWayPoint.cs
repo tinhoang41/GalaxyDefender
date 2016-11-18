@@ -58,18 +58,24 @@ public class SpawnWayPoint : MonoBehaviour {
     protected float      spawnRate;
     protected int        currentWave;
 
+    protected float      totalTime;
     protected int        enemiesToSpawn;
     protected int        enemiesPerTime;
     protected int        currentWaypointIndex;
     protected int        currentEnemiesSpawn;
     protected int 	     enemiesLevel;
     protected bool 	     isFinishedSpawning;
+    protected bool       isRunning;
 
     public bool pIsFinishedSpawning
     {
         get{return isFinishedSpawning;}
     }
 
+    public virtual EnemyType pEnemyTypeForSpawning
+    {
+        get { return EnemyType.INVALID; }
+    }
     // Use this for initialization
     void Start ()
     {
@@ -89,17 +95,18 @@ public class SpawnWayPoint : MonoBehaviour {
 
     protected virtual void Initialize()
     {
-        currentWave          = 45;
+        currentWave          = 0;
         currentWaypointIndex = 0;
         currentEnemiesSpawn  = 0;
         isFinishedSpawning   = true;
+        totalTime            = 0.0f;
+        isRunning            = false;
         SetUpSpawningVariables();
 
     }
 
     protected virtual void SetUpSpawningVariables()
     {
-        isFinishedSpawning = false;
         EvaluateEnemiesLevel();
         EvaluateEnemiesSpawn();
         EvaluateSpawnPerTime ();
@@ -110,7 +117,10 @@ public class SpawnWayPoint : MonoBehaviour {
     {
         currentWave++;
         currentWaypointIndex = 0;
-        currentEnemiesSpawn = 0;
+        currentEnemiesSpawn  = 0;
+        totalTime            = 0.0f;
+        isRunning            = true;
+        isFinishedSpawning   = false;
         SetUpSpawningVariables();
     }
 
@@ -131,6 +141,11 @@ public class SpawnWayPoint : MonoBehaviour {
         isFinishedSpawning = true;
     }
 
+    void Update()
+    {
+        if (isRunning)
+            totalTime += Time.deltaTime;
+    }
     protected virtual void ShowAlertSpawning(List<SpawnData> dataList){}
 
     protected virtual void SpawnEnemy(SpawnData dataList)

@@ -106,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAcceleration: 0
   minAcceleration: 0
-  minSpeed: 15
+  minSpeed: 8
   maxSpeed: 16
   rotatingSpeed: 1
 --- !u!114 &11455606

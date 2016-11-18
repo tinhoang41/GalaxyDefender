@@ -11,6 +11,8 @@ public enum WaveType : int
 public class GameManager : MonoBehaviour {
 
     protected WaveManager waveManager;
+    public GameObject player;
+    protected bool isGameOver;
     // Use this for initialization
     void Start ()
     {
@@ -21,13 +23,25 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator Run()
     {
-        while(!isGameOver())
+        while(!checkGameOver())
             yield return waveManager.HandleRunningWave();
+        isGameOver = true;
+        waveManager.EndWave();
+        CleanUpEnemies();
+
     }
 
-    bool isGameOver()
+    bool checkGameOver()
     {
-        return false;
+        isGameOver = player.GetComponent<PlayerData>().pIsDead;
+        return isGameOver;
+    }
+
+    void CleanUpEnemies()
+    {
+        var enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var enemy in enemiesList)
+            DestroyObject(enemy.gameObject);
     }
 
 }

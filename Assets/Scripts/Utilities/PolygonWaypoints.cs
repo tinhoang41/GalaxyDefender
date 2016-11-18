@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class PolygonWaypoints : SpawnWayPoint {
 
+    public override EnemyType pEnemyTypeForSpawning
+    {
+        get { return EnemyType.POLYGON; }
+    }
+
     protected override IEnumerator SpawnEnemies(List<SpawnData> dataList)
     {
         foreach(var spawnData in dataList)

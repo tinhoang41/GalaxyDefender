@@ -135,8 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAcceleration: 0
   minAcceleration: 0
-  minSpeed: 8
-  maxSpeed: 10
+  minSpeed: 2
+  maxSpeed: 6
   rotatingSpeed: 0.009
   waitTime: 1
   loopTime: 0

@@ -19,9 +19,9 @@ public class LeftJoyStickController : ShooterBase
     {
         // Left Stick Control
         CheckShooting();
-		if (Input.GetKeyUp(KeyCode.Space) && !isSpraying) {
-			StartCoroutine("Spray");
-		}
+        if (Input.GetKeyUp(KeyCode.Space) && !isSpraying) {
+            StartCoroutine("Spray");
+        }
 
 
     }
@@ -33,6 +33,10 @@ public class LeftJoyStickController : ShooterBase
         if (directionVector.magnitude < joystickThreshold || !pCanShoot) return;
 
         ShootBullet(directionVector);
+        ShootBullet(Quaternion.Euler(0, 0, -5) * directionVector);
+        ShootBullet(Quaternion.Euler(0, 0,  5) * directionVector);
+        ShootBullet(Quaternion.Euler(0, 0, -10) * directionVector);
+        ShootBullet(Quaternion.Euler(0, 0, 10) * directionVector);
     }
     #endregion
 
