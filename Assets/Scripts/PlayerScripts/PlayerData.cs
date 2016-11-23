@@ -23,9 +23,9 @@ public class PlayerData : ActorData {
         
         base.ApplyDamage (damage);
         isDead = currentLives <= 0;
+		HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
         if (!isDead) 
         {
-            HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
             isImmortal = true;
             immortalTime = immortalTimeForRecovering;
             StartCoroutine ("RunImmortality", ImmortalType.RECOVERING);

@@ -32,6 +32,9 @@ public class RightJoyStickController : GameObjectMover {
 
     protected override void UpdateVelocity()
     {
+		if (GetComponent<PlayerData> ().pIsDead)
+			return;
+		
         var desiredVelocity = new Vector3(CnInputManager.GetAxis(horizontalAxisName), CnInputManager.GetAxis(verticalAxisName), 0.0f);
 
         if (desiredVelocity.magnitude < joystickThreshold)

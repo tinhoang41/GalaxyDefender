@@ -12,11 +12,17 @@ public class LeftJoyStickController : ShooterBase
 
     public int numberSprayPerRound;
     public int numberOfRound;
+	protected PlayerData playerData;
+
     #endregion
     private bool isSpraying;
     #region Methods
+	  
     void Update()
     {
+		if (GetComponent<PlayerData> ().pIsDead)
+			return;
+		
         // Left Stick Control
         CheckShooting();
         if (Input.GetKeyUp(KeyCode.Space) && !isSpraying) {
