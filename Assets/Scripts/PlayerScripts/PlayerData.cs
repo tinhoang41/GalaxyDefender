@@ -1,14 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public class PlayerData : ActorData {
+public interface MyJoystickController
+{
+    bool pIsControlling
+    {
+        get;
+        set;
+    }
+}
+public class PlayerData : ActorData
+{
 
     public float immortalTimeForRecovering;
     public float immortalTimeFromItem;
     public int   defaultLives;
     public GameObject HUD;
-
+    
     public bool pIsDead
     {
         get { return isDead; }
@@ -23,7 +31,7 @@ public class PlayerData : ActorData {
         
         base.ApplyDamage (damage);
         isDead = currentLives <= 0;
-		HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
+        HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
         if (!isDead) 
         {
             isImmortal = true;

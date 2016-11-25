@@ -59,7 +59,7 @@ public class GameObjectMover : MonoBehaviour {
     #region Methods
     public virtual void Update()
     {
-		if (!pRunCoroutine && Time.timeScale != 0)
+		if (!pRunCoroutine)
         {
             Moving();
             Rotate();

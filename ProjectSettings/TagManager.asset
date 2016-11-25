@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Spawn
   - WaveManager
+  - GameOver
   layers:
   - Default
   - TransparentFX

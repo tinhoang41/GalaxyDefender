@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using CnControls;
 using System.Collections;
+using System;
 
-public class LeftJoyStickController : ShooterBase
+public class LeftJoyStickController : ShooterBase, MyJoystickController
 {
 
     #region Publics
@@ -12,17 +13,23 @@ public class LeftJoyStickController : ShooterBase
 
     public int numberSprayPerRound;
     public int numberOfRound;
-	protected PlayerData playerData;
+    protected PlayerData playerData;
 
     #endregion
     private bool isSpraying;
+
+    public bool pIsControlling
+    {
+        get;
+        set;
+    }
     #region Methods
-	  
+
     void Update()
     {
-		if (GetComponent<PlayerData> ().pIsDead)
-			return;
-		
+        if (GetComponent<PlayerData> ().pIsDead)
+            return;
+        
         // Left Stick Control
         CheckShooting();
         if (Input.GetKeyUp(KeyCode.Space) && !isSpraying) {
@@ -36,13 +43,10 @@ public class LeftJoyStickController : ShooterBase
     void CheckShooting()
     {
         var directionVector = new Vector3(CnInputManager.GetAxis(horizontalAxisName), CnInputManager.GetAxis(verticalAxisName), 0.0f);
-        if (directionVector.magnitude < joystickThreshold || !pCanShoot) return;
-
+        pIsControlling = directionVector.magnitude >= joystickThreshold;
+        if(!pCanShoot || !pIsControlling)
+            return;
         ShootBullet(directionVector);
-        ShootBullet(Quaternion.Euler(0, 0, -5) * directionVector);
-        ShootBullet(Quaternion.Euler(0, 0,  5) * directionVector);
-        ShootBullet(Quaternion.Euler(0, 0, -10) * directionVector);
-        ShootBullet(Quaternion.Euler(0, 0, 10) * directionVector);
     }
     #endregion
 
