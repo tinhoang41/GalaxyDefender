@@ -43,8 +43,8 @@ public class LeftJoyStickController : ShooterBase, MyJoystickController
     void CheckShooting()
     {
         var directionVector = new Vector3(CnInputManager.GetAxis(horizontalAxisName), CnInputManager.GetAxis(verticalAxisName), 0.0f);
-        pIsControlling = directionVector.magnitude >= joystickThreshold;
-        if(!pCanShoot || !pIsControlling)
+        pIsControlling = directionVector.magnitude >= 0.0005;
+        if(!pCanShoot || directionVector.magnitude < joystickThreshold)
             return;
         ShootBullet(directionVector);
     }
