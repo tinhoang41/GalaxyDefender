@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class UserData
@@ -20,8 +21,45 @@ public class SaveData
 public class GlobalControl : MonoBehaviour {
 
     public static GlobalControl Instance;
-    public UserData             currentPlayData;
-    public SaveData             saveData;
+    private UserData             currentPlayData;
+	private SaveData             saveData;
+
+	private GameObject playerObject;
+	private GameObject pauseMenu;
+	private GameObject gameOverMenu;
+	private GameObject HUD;
+
+
+	public UserData pCurrentPlayData
+	{
+		get{ return currentPlayData; }
+	}
+
+	public SaveData pSaveData
+	{
+		get { return saveData; }
+	}
+
+	public GameObject pPlayer
+	{
+		get{ return playerObject; }
+	}
+
+	public GameObject pPauseMenu
+	{
+		get { return playerObject; }
+	}
+
+	public GameObject pGameOverMenu
+	{
+		get { return gameOverMenu; }
+	}
+
+	public GameObject pHUD
+	{
+		get { return HUD; }
+	}
+
 
     void Awake()
     {
@@ -36,5 +74,29 @@ public class GlobalControl : MonoBehaviour {
         }
     }
 
+	void AddOnLoadedListeners()
+	{
+		SceneManager.sceneLoaded += OnLevelWasLoaded;
+	}
 
+	void OnLevelWasLoaded(Scene scene, LoadSceneMode mode)
+	{
+		//validate scene
+
+		// add references
+		playerObject = GameObject.FindGameObjectWithTag("Player");
+		pauseMenu = GameObject.FindGameObjectWithTag ("PauseMenu");
+		gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
+		HUD = GameObject.FindGameObjectWithTag ("HUD");
+	}
+
+	void OnLevelWasUnloaded(Scene scene, LoadSceneMode mode)
+	{
+
+	}
+
+	void GetSaveData()
+	{
+		
+	}
 }
