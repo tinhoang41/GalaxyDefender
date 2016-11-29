@@ -6,7 +6,6 @@ public class WaveManager : MonoBehaviour {
 
     public GameObject enemiesSpawn;
     public GameObject itemsSpawn;
-    public GameObject HUD;
 
     public int deBugWaveNumber;
     public List<WaveData> waveInfo;
@@ -24,7 +23,7 @@ public class WaveManager : MonoBehaviour {
 
         currentWave         = deBugWaveNumber;
         currentWaveType     = WaveType.INVALID;
-        hudManager          = HUD.GetComponent<HUDManager>();
+        hudManager          = GlobalControl.Instance.pHUD.GetComponent<HUDManager>();
 
         enemiesSpawnManager = enemiesSpawn.GetComponent<EnemiesSpawnManager>();
         enemiesSpawnManager.Initialize (waveInfo);

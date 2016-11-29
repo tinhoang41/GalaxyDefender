@@ -22,43 +22,43 @@ public class GlobalControl : MonoBehaviour {
 
     public static GlobalControl Instance;
     private UserData             currentPlayData;
-	private SaveData             saveData;
+    private SaveData             saveData;
 
-	private GameObject playerObject;
-	private GameObject pauseMenu;
-	private GameObject gameOverMenu;
-	private GameObject HUD;
+    private GameObject playerObject;
+    private GameObject pauseMenu;
+    private GameObject gameOverMenu;
+    private GameObject HUD;
 
 
-	public UserData pCurrentPlayData
-	{
-		get{ return currentPlayData; }
-	}
+    public UserData pCurrentPlayData
+    {
+        get{ return currentPlayData; }
+    }
 
-	public SaveData pSaveData
-	{
-		get { return saveData; }
-	}
+    public SaveData pSaveData
+    {
+        get { return saveData; }
+    }
 
-	public GameObject pPlayer
-	{
-		get{ return playerObject; }
-	}
+    public GameObject pPlayer
+    {
+        get{ return playerObject; }
+    }
 
-	public GameObject pPauseMenu
-	{
-		get { return playerObject; }
-	}
+    public GameObject pPauseMenu
+    {
+        get { return pauseMenu; }
+    }
 
-	public GameObject pGameOverMenu
-	{
-		get { return gameOverMenu; }
-	}
+    public GameObject pGameOverMenu
+    {
+        get { return gameOverMenu; }
+    }
 
-	public GameObject pHUD
-	{
-		get { return HUD; }
-	}
+    public GameObject pHUD
+    {
+        get { return HUD; }
+    }
 
 
     void Awake()
@@ -66,6 +66,8 @@ public class GlobalControl : MonoBehaviour {
         if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
+            AddListeners();
+            //GetReferenes();
             Instance = this;
         }
         else if (Instance != this)
@@ -74,29 +76,37 @@ public class GlobalControl : MonoBehaviour {
         }
     }
 
-	void AddOnLoadedListeners()
-	{
-		SceneManager.sceneLoaded += OnLevelWasLoaded;
-	}
+    void AddListeners()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnLevelWasUnloaded;
 
-	void OnLevelWasLoaded(Scene scene, LoadSceneMode mode)
-	{
-		//validate scene
+    }
 
-		// add references
-		playerObject = GameObject.FindGameObjectWithTag("Player");
-		pauseMenu = GameObject.FindGameObjectWithTag ("PauseMenu");
-		gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
-		HUD = GameObject.FindGameObjectWithTag ("HUD");
-	}
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //validate scene
+        GetReferenes();
+    }
 
-	void OnLevelWasUnloaded(Scene scene, LoadSceneMode mode)
-	{
+    void GetReferenes()
+    {
+         // add references
+        playerObject = GameObject.FindGameObjectWithTag ("Player");
+        pauseMenu    = GameObject.FindGameObjectWithTag ("PauseMenu");
+        gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
+        HUD          = GameObject.FindGameObjectWithTag ("HUD");
+    }
+    void OnLevelWasUnloaded(Scene scene)
+    {
+        playerObject = null;
+        pauseMenu    = null;
+        gameOverMenu = null;
+        HUD          = null;
+    }
 
-	}
-
-	void GetSaveData()
-	{
-		
-	}
+    void GetSaveData()
+    {
+        
+    }
 }

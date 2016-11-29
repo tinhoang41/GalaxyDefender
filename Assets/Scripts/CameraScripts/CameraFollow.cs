@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 
-    public Transform target;
+    private Transform target;
     public float damping = 1;
     public float lookAheadFactor = 3;
     public float lookAheadReturnSpeed = 0.5f;
@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
+        target = GlobalControl.Instance.pPlayer.transform;
         m_LastTargetPosition = target.position;
         m_OffsetZ            = (transform.position - target.position).z;
         transform.parent     = null;

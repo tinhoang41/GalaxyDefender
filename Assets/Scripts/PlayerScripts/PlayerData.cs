@@ -15,7 +15,6 @@ public class PlayerData : ActorData
     public float immortalTimeForRecovering;
     public float immortalTimeFromItem;
     public int   defaultLives;
-    public GameObject HUD;
     
     public bool pIsDead
     {
@@ -31,7 +30,7 @@ public class PlayerData : ActorData
         
         base.ApplyDamage (damage);
         isDead = currentLives <= 0;
-        HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
+        GlobalControl.Instance.pHUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
         if (!isDead) 
         {
             isImmortal = true;
@@ -51,7 +50,7 @@ public class PlayerData : ActorData
         isDead       = false;
         currentLives = defaultLives;
         colorChanger = GetComponent<PlayerColorChanger> ();
-        HUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
+        GlobalControl.Instance.pHUD.GetComponent<HUDManager>().UpdateLiveText(currentLives);
 
     }
 

@@ -11,10 +11,6 @@ public enum WaveType : int
 public class GameManager : MonoBehaviour {
 
     protected WaveManager waveManager;
-    public GameObject player;
-    public GameObject gameOverMenu;
-    public GameObject pauseMenu;
-
     protected bool isGameOver;
     protected bool isPause;
 
@@ -22,7 +18,7 @@ public class GameManager : MonoBehaviour {
     void Start ()
     {
         waveManager = GetComponentInChildren<WaveManager>();
-        StartCoroutine ("Run");
+        StartCoroutine("Run");
         StartCoroutine("CheckForPause");
 
     }
@@ -30,9 +26,10 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator Run()
     {
-        while(!checkGameOver())
+        yield return null;
+        while (!checkGameOver())
             yield return waveManager.HandleRunningWave();
-        DestroyObject(player.gameObject);
+        DestroyObject(GlobalControl.Instance.pPlayer.gameObject);
         isGameOver = true;
         waveManager.EndWave();
         CleanUpEnemies();
@@ -42,9 +39,11 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator CheckForPause()
     {
+        yield return null;
         while (!checkGameOver())
         {
-            isPause = !player.GetComponent<LeftJoyStickController>().pIsControlling && !player.GetComponent<RightJoyStickController>().pIsControlling;
+            var playerData = GlobalControl.Instance.pPlayer.GetComponent<PlayerData>();
+            isPause = !GlobalControl.Instance.pPlayer.GetComponent<LeftJoyStickController>().pIsControlling && !GlobalControl.Instance.pPlayer.GetComponent<RightJoyStickController>().pIsControlling;
             if (isPause)
                 EnableGamePauseMenu();
             else
@@ -54,7 +53,8 @@ public class GameManager : MonoBehaviour {
     }
     bool checkGameOver()
     {
-        isGameOver = player.GetComponent<PlayerData>().pIsDead;
+        var hello = GlobalControl.Instance.pPlayer.GetComponent<PlayerData>();
+        isGameOver = GlobalControl.Instance.pPlayer.GetComponent<PlayerData>().pIsDead;
         return isGameOver;
     }
 
@@ -67,20 +67,20 @@ public class GameManager : MonoBehaviour {
 
     void EnableGameOverMenu()
     {
-        gameOverMenu.SetActive(true);
+        GlobalControl.Instance.pGameOverMenu.SetActive(true);
     }
 
     void EnableGamePauseMenu()
     {
         Time.timeScale = 0;
-        pauseMenu.SetActive(true);
+        GlobalControl.Instance.pPauseMenu.SetActive(true);
     }
 
     void DisableGamePauseMenu()
     {
 
         Time.timeScale = 1;
-        pauseMenu.SetActive(false);
+        GlobalControl.Instance.pPauseMenu.SetActive(false);
     }
 
 }

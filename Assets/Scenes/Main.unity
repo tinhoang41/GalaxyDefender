@@ -134,7 +134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesSpawn: {fileID: 444218587}
   itemsSpawn: {fileID: 780190300}
-  HUD: {fileID: 1814000962}
   deBugWaveNumber: 0
   waveInfo:
   - waveType: 0
@@ -318,9 +317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b370e64f02035bc46b8e83d081a7dca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 492854737}
-  gameOverMenu: {fileID: 1478335046}
-  pauseMenu: {fileID: 1132180585}
 --- !u!1 &253800635
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &258847909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +504,7 @@ GameObject:
   - 212: {fileID: 293826652}
   m_Layer: 0
   m_Name: Ship
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1199,7 +1195,6 @@ MonoBehaviour:
   immortalTimeForRecovering: 0.5
   immortalTimeFromItem: 5
   defaultLives: 2
-  HUD: {fileID: 1814000962}
 --- !u!1 &759303640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,7 +1640,7 @@ GameObject:
   - 114: {fileID: 1132180587}
   m_Layer: 5
   m_Name: PauseMenu
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2405,7 +2400,7 @@ GameObject:
   - 114: {fileID: 1478335048}
   m_Layer: 5
   m_Name: GameOverMenu
-  m_TagString: Untagged
+  m_TagString: GameOverMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2881,7 +2876,7 @@ GameObject:
   - 114: {fileID: 1814000964}
   m_Layer: 5
   m_Name: HUD
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

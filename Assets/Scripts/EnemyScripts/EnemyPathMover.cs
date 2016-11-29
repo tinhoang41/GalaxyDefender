@@ -48,6 +48,7 @@ public class EnemyPathMover : SeekingMover {
 
     IEnumerator FollowPath()
     {
+
         while(repeating > 0)
         {
             currentIndex = 0;

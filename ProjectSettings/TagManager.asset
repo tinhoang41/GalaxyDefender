@@ -9,7 +9,9 @@ TagManager:
   - Enemy
   - Spawn
   - WaveManager
-  - GameOver
+  - GameOverMenu
+  - PauseMenu
+  - HUD
   layers:
   - Default
   - TransparentFX

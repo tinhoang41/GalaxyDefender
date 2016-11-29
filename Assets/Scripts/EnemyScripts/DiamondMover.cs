@@ -3,7 +3,6 @@ using System.Collections;
 
 public class DiamondMover : SeekingMover {
 
-    private GameObject player;
 
     public float distanceThreshold = 5.0f;
 
@@ -15,21 +14,20 @@ public class DiamondMover : SeekingMover {
     protected override void Initialize()
     {
         base.Initialize();
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     protected override void UpdateTarget()
     {
-        destination = player.transform.position;
+        destination = GlobalControl.Instance.pPlayer.transform.position;
     }
 
     protected override void FindTarget()
     {
-        if((player.transform.position - transform.position).magnitude >= distanceThreshold)
+        if((GlobalControl.Instance.pPlayer.transform.position - transform.position).magnitude >= distanceThreshold)
         {
             hasTarget     = true;
             _currentSpeed = _initialSpeed;
-            destination   = player.transform.position;
+            destination   = GlobalControl.Instance.pPlayer.transform.position;
         }
 
         base.FindTarget();
