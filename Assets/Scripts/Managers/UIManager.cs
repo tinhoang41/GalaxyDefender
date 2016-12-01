@@ -2,11 +2,16 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
-public class ButtonsHandling : MonoBehaviour {
+public class UIManager : MonoBehaviour {
 
     public Button restartButton;
     public Button quitButton;
+
+	public List<Button> buttons;
+	public List<UnityAction> actions;
 
     // Use this for initialization
     void Start () {
