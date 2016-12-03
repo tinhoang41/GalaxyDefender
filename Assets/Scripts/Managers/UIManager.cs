@@ -5,37 +5,36 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class UIManager : MonoBehaviour {
+public abstract class UIManager : MonoBehaviour {
 
-    public Button restartButton;
-    public Button quitButton;
-
-	public List<Button> buttons;
-	public List<UnityAction> actions;
+    public List<Button> buttons;
+    public List<UnityAction> actions;
 
     // Use this for initialization
-    void Start () {
-        restartButton.onClick.AddListener(() => RestartLevel());
-        quitButton.onClick.AddListener(() => Quit());
-
-        gameObject.SetActive(false);
-    }
-    
-    void RestartLevel()
+    public virtual void Start ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameObject.SetActive(false);
+        SetUpActions();
+        AddListeners();
     }
+
+    protected abstract void SetUpActions();
+
+    void AddListeners()
+    {
+        for(int i = 0; i < buttons.Count; i++)
+            buttons[i].onClick.AddListener(actions[i]);
+    }
+
+    void RemoveListeners()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+            if(!buttons[i].IsDestroyed())
+                buttons[i].onClick.RemoveListener(actions[i]);
+    }
+
 
     void Destroy()
     {
-        restartButton.onClick.RemoveListener(() => RestartLevel());
-        quitButton.onClick.RemoveListener(() => Quit());
-
-    }
-
-    void Quit()
-    {
-        Application.Quit();
+        RemoveListeners();
     }
 }
