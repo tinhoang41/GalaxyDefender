@@ -5,7 +5,9 @@ public class EnemyData : ActorData {
 
     private EnemyDataParameter data;
     private int maxLife;
+
 	public float immortalTimeWhenSpawn;
+    public int EnemyScore;
 
     public EnemyDataParameter pData
     {
@@ -30,9 +32,9 @@ public class EnemyData : ActorData {
 	protected override void Initialize ()
 	{
 		base.Initialize ();
-        maxLife     = data.maxLevel;
+        maxLife      = data.maxLevel;
 		currentLives = data.currentLevel;
-		isImmortal = true;
+		isImmortal   = true;
 		immortalTime = immortalTimeWhenSpawn;
 		StartCoroutine ("RunImmortality", ImmortalType.SPAWNING);
     }

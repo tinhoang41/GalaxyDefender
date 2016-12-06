@@ -27,14 +27,10 @@ public class GameManager : MonoBehaviour {
     IEnumerator Run()
     {
         yield return null;
+        GlobalControl.Instance.StartNewGame();
         while (!checkGameOver())
             yield return waveManager.HandleRunningWave();
-        DestroyObject(GlobalControl.Instance.pPlayer.gameObject);
-        isGameOver = true;
-        waveManager.EndWave();
-        CleanUpEnemies();
-        EnableGameOverMenu();
-
+        HandleGameOver();
     }
 
     IEnumerator CheckForPause()
@@ -51,6 +47,7 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
     }
+
     bool checkGameOver()
     {
         var hello = GlobalControl.Instance.pPlayer.GetComponent<PlayerData>();
@@ -78,9 +75,17 @@ public class GameManager : MonoBehaviour {
 
     void DisableGamePauseMenu()
     {
-
         Time.timeScale = 1;
         GlobalControl.Instance.pPauseMenu.SetActive(false);
+    }
+
+    void HandleGameOver()
+    {
+        DestroyObject(GlobalControl.Instance.pPlayer.gameObject);
+        isGameOver = true;
+        waveManager.EndWave();
+        CleanUpEnemies();
+        EnableGameOverMenu();
     }
 
 }

@@ -35,6 +35,8 @@ public class SpawnWayPoint : MonoBehaviour {
     public List<WayPointData>  wayPoints;
     public GameObject 		   objectToSpawn;
 
+    public int           bonusScorePerUnit;
+
     public int           currentLevel;
     public int 			 EnemiesLevelFactor;
     public int 			 maxEnemiesLevel;
@@ -66,6 +68,11 @@ public class SpawnWayPoint : MonoBehaviour {
     protected int 	     enemiesLevel;
     protected bool 	     isFinishedSpawning;
     protected bool       isRunning;
+
+    public virtual int pBonusScore
+    {
+        get { return bonusScorePerUnit * enemiesToSpawn; }
+    }
 
     public bool pIsFinishedSpawning
     {

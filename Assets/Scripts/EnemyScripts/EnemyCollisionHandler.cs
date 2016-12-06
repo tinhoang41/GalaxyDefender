@@ -32,6 +32,11 @@ public class EnemyCollisionHandler : CollisionHandlerBase {
         return enemyData.pCurrentLives <= 0;
     }
 
+    protected override void ActionAfterDestroySelf(Collider2D other)
+    {
+        base.ActionAfterDestroySelf(other);
+        GlobalControl.Instance.UpdateScore(enemyData.EnemyScore);
+    }
     protected override bool ShouldDestroyOther(Collider2D other)
     {
         return other.tag == "Bullet";

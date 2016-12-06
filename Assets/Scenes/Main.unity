@@ -140,6 +140,11 @@ MonoBehaviour:
     enemies: 0200000000000000
   - waveType: 1
     enemies: 01000000
+--- !u!224 &115062623 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224000010349798960, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+    type: 2}
+  m_PrefabInternal: {fileID: 988251540}
 --- !u!1 &234680110
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +460,7 @@ MonoBehaviour:
     initialEnemyRotation: 0
   objectToSpawn: {fileID: 1000013621464854, guid: e28c938deaf1bc64a800225d7f483b03,
     type: 2}
+  bonusScorePerUnit: 50
   currentLevel: 0
   EnemiesLevelFactor: 10
   maxEnemiesLevel: 2
@@ -513,6 +519,7 @@ MonoBehaviour:
     initialEnemyRotation: 0
   objectToSpawn: {fileID: 1000010914662170, guid: be610bfec6431254ea1c2bf6d60c6687,
     type: 2}
+  bonusScorePerUnit: 10
   currentLevel: 0
   EnemiesLevelFactor: 5
   maxEnemiesLevel: 5
@@ -566,6 +573,7 @@ MonoBehaviour:
     initialEnemyRotation: 0
   objectToSpawn: {fileID: 1000011147394034, guid: 68e711f797be84d4a92152fea8a174e8,
     type: 2}
+  bonusScorePerUnit: 10
   currentLevel: 0
   EnemiesLevelFactor: 10
   maxEnemiesLevel: 10
@@ -580,7 +588,7 @@ MonoBehaviour:
   EnemiesSpawnPerTimeFactor: 20
   minSpawnPerTime: 1
   maxSpawnPertime: 3
-  alertTime: 0
+  alertTime: 0.15
   antiCornersWaypoints: []
 --- !u!114 &444218592
 MonoBehaviour:
@@ -684,7 +692,7 @@ MonoBehaviour:
   minSpeed: 6
   maxSpeed: 6
   rotatingSpeed: 0.25
-  joystickThreshold: 0.5
+  joystickThreshold: 0.15
   horizontalAxisName: RotationHorizontal
   verticalAxisName: RotationVertical
   initialAcceleration: 2
@@ -785,6 +793,84 @@ MonoBehaviour:
   immortalTimeForRecovering: 0.5
   immortalTimeFromItem: 5
   defaultLives: 2
+--- !u!1 &753455372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1000013335303398, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 753455373}
+  - 222: {fileID: 753455375}
+  - 114: {fileID: 753455374}
+  m_Layer: 5
+  m_Name: ScoreText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &753455373
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224000013284420166, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753455372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 115062623}
+  m_RootOrder: 3
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 750, y: -20.000122}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &753455374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114000013540357822, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753455372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 124
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'Score:'
+--- !u!222 &753455375
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222000011938907066, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753455372}
 --- !u!1 &780190300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1139,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224000013902746486, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010807770576, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013989259780, guid: 9e2990dc1ac584a96b09cdfe26d56234,
+        type: 2}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 753455372}
     m_RemovedComponents:
     - {fileID: 114000014152531148, guid: 9e2990dc1ac584a96b09cdfe26d56234, type: 2}
     - {fileID: 114000011750833828, guid: 9e2990dc1ac584a96b09cdfe26d56234, type: 2}

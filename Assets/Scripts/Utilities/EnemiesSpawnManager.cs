@@ -41,8 +41,13 @@ public class EnemiesSpawnManager : MonoBehaviour {
     }
     public void EndWave()
     {
+        var bonusWaveScore = 0;
         foreach (var spawner in currenSpawners)
+        {
             spawner.Stop();
+            bonusWaveScore += spawner.pBonusScore;
+        }
+        GlobalControl.Instance.UpdateScore(bonusWaveScore);
     }
 
     public bool isFinished()

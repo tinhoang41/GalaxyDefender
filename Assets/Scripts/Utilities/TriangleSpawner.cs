@@ -37,9 +37,17 @@ public class TriangleSpawner : SpawnWayPoint {
         get { return EnemyType.TRIANGLE; }
     }
 
+    public override int pBonusScore
+    {
+        get
+        {
+            return (int)(bonusScorePerUnit * timeForWave );
+        }
+    }
+
     protected override void Initialize()
     {
-        player        = GameObject.FindWithTag("Player");
+        player        = GlobalControl.Instance.pPlayer;
         gap           = player.GetComponentInChildren<SpriteRenderer>().bounds.size.x * 0.150f;
         triangleWidth = objectToSpawn.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
 

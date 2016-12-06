@@ -4,25 +4,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class UserData
-{
-    float totalScore;
-    float finalWaveLevel;
-}
 
-[Serializable]
-public class SaveData
-{
-    public List<UserData> recordedData;
-}
 
 
 public class GlobalControl : MonoBehaviour {
 
     public static GlobalControl Instance;
     private UserData             currentPlayData;
-    private SaveData             saveData;
 
     private GameObject playerObject;
     private GameObject pauseMenu;
@@ -35,10 +23,6 @@ public class GlobalControl : MonoBehaviour {
         get{ return currentPlayData; }
     }
 
-    public SaveData pSaveData
-    {
-        get { return saveData; }
-    }
 
     public GameObject pPlayer
     {
@@ -97,12 +81,24 @@ public class GlobalControl : MonoBehaviour {
         gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
         HUD          = GameObject.FindGameObjectWithTag ("HUD");
     }
+
     void OnLevelWasUnloaded(Scene scene)
     {
         playerObject = null;
         pauseMenu    = null;
         gameOverMenu = null;
         HUD          = null;
+    }
+
+    public void StartNewGame()
+    {
+        currentPlayData = new UserData();
+    }
+
+    public void UpdateScore(int addtionalScore)
+    {
+        currentPlayData.UpdateScore(addtionalScore);
+        HUD.GetComponent<HUDManager>().UpdateScore(currentPlayData.pTotalScore);
     }
 
     void GetSaveData()

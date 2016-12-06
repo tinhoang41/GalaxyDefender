@@ -7,15 +7,7 @@ public class HUDManager : MonoBehaviour {
     public GameObject liveText;
     public GameObject hintText;
     public GameObject currentWaveText;
-
-    // Use this for initialization
-    void Start () {
-    }
-    
-    // Update is called once per frame
-    void Update () {
-    
-    }
+    public GameObject scoreText;
 
     public void ResetHint()
     {
@@ -37,5 +29,10 @@ public class HUDManager : MonoBehaviour {
     {
         currentWaveText.GetComponent<Text>().text = "Wave : " + currentWave;
 
+    }
+
+    public void UpdateScore(int score)
+    {
+        scoreText.GetComponent<Text>().text = "Score : " + score;
     }
 }

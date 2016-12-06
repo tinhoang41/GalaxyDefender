@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalTimeWhenSpawn: 0.15
+  EnemyScore: 100
 --- !u!114 &114000012520704650
 MonoBehaviour:
   m_ObjectHideFlags: 1
