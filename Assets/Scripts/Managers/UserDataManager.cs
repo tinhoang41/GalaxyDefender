@@ -12,6 +12,7 @@ public enum ControllerSetting
     TYPE_ONE = 0,
     TYPE_TWO = 1,
 }
+
 [Serializable]
 public class UserData
 {
@@ -81,24 +82,29 @@ public abstract class SaveData
 
     public bool Load()
     {
-        if (string.IsNullOrEmpty(FileName) || !Directory.Exists(DirectoryName) || !File.Exists(FullFilePath))
+		var createFile = false;
+		if (string.IsNullOrEmpty(FileName) || !Directory.Exists(DirectoryName))
             return false;
-
+		
+		createFile = !File.Exists(FullFilePath);
         var retVal = false;
-        try
-        {
 
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream fileStream = File.Open(FullFilePath, FileMode.Open);
-            retVal = GetSaveDataFromStream(fileStream, bf);            
-            fileStream.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.Log("exception caught in Loading data" + e.ToString());
-            retVal = false;
-        }
+		if (createFile)
+		{
+			Save ();
+		} 
+		else {
+			try {
 
+				BinaryFormatter bf = new BinaryFormatter ();
+				FileStream fileStream = File.Open (FullFilePath, FileMode.Open);
+				retVal = GetSaveDataFromStream (fileStream, bf);            
+				fileStream.Close ();
+			} catch (Exception e) {
+				Debug.Log ("exception caught in Loading data" + e.ToString ());
+				retVal = false;
+			}
+		}
         return retVal;
     }
 
@@ -167,13 +173,36 @@ public class UserDataManager {
     ProfileSettings profileSettings;
 
     string DIRECTORY_PATH        = Application.persistentDataPath + "/SaveData";
-    string SAVE_DATA_NAME        = "/HighScore.dat";
-    string PROFILE_SETTINGS_NAME = "/ProfileSettings.dat";
-
     
     public UserDataManager()
     {
         currentPlayData = new UserData();
+		recordedData = new SaveData ();
+		profileSettings = new ProfileSettings ();
+		CheckSaveDataDirectory ();
+
     }
     
+	public void LoadData()
+	{
+		profileSettings.Load ();
+		recordedData.Load ();
+	}
+
+	public void SaveSettings()
+	{
+		profileSettings.Save ();
+	}
+
+	public void UpdateAndSaveHighScore()
+	{
+		recordedData.Save ();
+	}
+
+	void CheckSaveDataDirectory()
+	{
+		if (Directory.Exists (DIRECTORY_PATH))
+			return;
+		Directory.CreateDirectory (DIRECTORY_PATH);
+	}
 }
