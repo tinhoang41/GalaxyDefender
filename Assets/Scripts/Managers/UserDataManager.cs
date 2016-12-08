@@ -14,7 +14,7 @@ public enum ControllerSetting
 }
 
 [Serializable]
-public class UserData
+public class UserData : IComparable
 {
     int totalScore;
     int finalWaveLevel;
@@ -39,6 +39,20 @@ public class UserData
     {
         finalWaveLevel++;
     }
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null) return 1;
+
+        UserData otherData = obj as UserData;
+        if (otherData != null)
+        {
+            return otherData.pTotalScore - this.pTotalScore;
+        }
+        else
+            throw new ArgumentException("Object is not a Temperature");
+    }
+
 }
 
 [Serializable]
@@ -165,21 +179,36 @@ public class HighScoreData : SaveData
         base.SetFilePath();
     }
 
+    public void UpdateHighScore(UserData currentPlayData)
+    {
+        //asuming the array is already sorted
+        if (currentPlayData.pTotalScore <= highScoresData[highScoresData.Length - 1].pTotalScore)
+            return;
+        highScoresData[highScoresData.Length - 1] = currentPlayData;
+        Array.Sort(highScoresData);
+    }
+
 }
 public class UserDataManager {
 
     UserData        currentPlayData;
-    SaveData        recordedData;
+    HighScoreData   recordedData;
     ProfileSettings profileSettings;
 
-    string DIRECTORY_PATH        = Application.persistentDataPath + "/SaveData";
+    string DIRECTORY_PATH = Application.persistentDataPath + "/SaveData";
+
+    public UserData pCurrentPlayData
+    {
+        get { return currentPlayData; }
+    }
     
     public UserDataManager()
     {
         currentPlayData = new UserData();
-		recordedData = new SaveData ();
+		recordedData    = new HighScoreData ();
 		profileSettings = new ProfileSettings ();
 		CheckSaveDataDirectory ();
+        LoadData();
 
     }
     
@@ -196,8 +225,14 @@ public class UserDataManager {
 
 	public void UpdateAndSaveHighScore()
 	{
+        recordedData.UpdateHighScore(currentPlayData);
 		recordedData.Save ();
 	}
+
+    public void StartNewGame()
+    {
+        currentPlayData = new UserData();
+    }
 
 	void CheckSaveDataDirectory()
 	{

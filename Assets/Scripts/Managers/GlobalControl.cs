@@ -10,19 +10,12 @@ using UnityEngine.SceneManagement;
 public class GlobalControl : MonoBehaviour {
 
     public static GlobalControl Instance;
-    private UserData             currentPlayData;
+    private UserDataManager userManager;
 
     private GameObject playerObject;
     private GameObject pauseMenu;
     private GameObject gameOverMenu;
     private GameObject HUD;
-
-
-    public UserData pCurrentPlayData
-    {
-        get{ return currentPlayData; }
-    }
-
 
     public GameObject pPlayer
     {
@@ -44,20 +37,29 @@ public class GlobalControl : MonoBehaviour {
         get { return HUD; }
     }
 
+    public UserDataManager pUserManager
+    {
+        get { return userManager; }
+    }
 
     void Awake()
     {
         if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            AddListeners();
-            //GetReferenes();
+            InitializeComponents();
             Instance = this;
         }
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
+    }
+
+    void InitializeComponents()
+    {
+        AddListeners();
+        userManager = new UserDataManager();
     }
 
     void AddListeners()
@@ -69,7 +71,6 @@ public class GlobalControl : MonoBehaviour {
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //validate scene
         GetReferenes();
     }
 
@@ -92,13 +93,13 @@ public class GlobalControl : MonoBehaviour {
 
     public void StartNewGame()
     {
-        currentPlayData = new UserData();
+        userManager.StartNewGame();
     }
 
     public void UpdateScore(int addtionalScore)
     {
-        currentPlayData.UpdateScore(addtionalScore);
-        HUD.GetComponent<HUDManager>().UpdateScore(currentPlayData.pTotalScore);
+        userManager.pCurrentPlayData.UpdateScore(addtionalScore);
+        HUD.GetComponent<HUDManager>().UpdateScore(userManager.pCurrentPlayData.pTotalScore);
     }
 
     void GetSaveData()
