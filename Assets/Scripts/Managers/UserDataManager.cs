@@ -18,17 +18,31 @@ public class UserData : IComparable
 {
     int totalScore;
     int finalWaveLevel;
+	bool valid;
 
     public int pTotalScore
     {
         get { return totalScore; }
     }
 
+	public int pFinalWaveLevel
+	{
+		get { return finalWaveLevel; }
+	}
+
     public UserData()
     {
         totalScore = 0;
         finalWaveLevel = 1;
+		valid = false;
     }
+
+	public UserData(bool isValid)
+	{
+		totalScore = 0;
+		finalWaveLevel = 1;
+		valid = isValid;
+	}
 
     public void UpdateScore(int score)
     {
@@ -47,7 +61,7 @@ public class UserData : IComparable
         UserData otherData = obj as UserData;
         if (otherData != null)
         {
-            return otherData.pTotalScore - this.pTotalScore;
+			return (otherData.pTotalScore - this.pTotalScore) ;
         }
         else
             throw new ArgumentException("Object is not a Temperature");
@@ -204,7 +218,7 @@ public class UserDataManager {
     
     public UserDataManager()
     {
-        currentPlayData = new UserData();
+        currentPlayData = new UserData(true);
 		recordedData    = new HighScoreData ();
 		profileSettings = new ProfileSettings ();
 		CheckSaveDataDirectory ();
