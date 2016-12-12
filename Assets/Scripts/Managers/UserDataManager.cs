@@ -30,6 +30,12 @@ public class UserData : IComparable
 		get { return finalWaveLevel; }
 	}
 
+    public bool pIsValid
+    {
+        get { return valid; }
+        set { valid = value; }
+    }
+
     public UserData()
     {
         totalScore = 0;
@@ -72,8 +78,6 @@ public class UserData : IComparable
 [Serializable]
 public abstract class SaveData
 {
-
-
     protected string FileName;
     protected string DirectoryName;
     protected string FullFilePath;
@@ -85,7 +89,7 @@ public abstract class SaveData
 
     public virtual void SetFilePath()
     {
-        FullFilePath = FileName + DirectoryName;
+        FullFilePath = DirectoryName + FileName;
     }
 
 
@@ -98,7 +102,7 @@ public abstract class SaveData
         {
             
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(FileName);
+            FileStream file = File.Create(FullFilePath);
             bf.Serialize(file, this);
             file.Close();
         }
@@ -174,6 +178,13 @@ public class HighScoreData : SaveData
     public UserData[] highScoresData;
     public const int highScoreSize = 10;
 
+    public HighScoreData()
+    {
+        highScoresData = new UserData[highScoreSize];
+        for (int i = 0; i < highScoresData.Length; i++)
+            highScoresData[i] = new UserData();
+    }
+
     public override bool GetSaveDataFromStream(FileStream fileStream, BinaryFormatter bf)
     {
         var retVal              = false;
@@ -215,7 +226,12 @@ public class UserDataManager {
     {
         get { return currentPlayData; }
     }
-    
+
+    public HighScoreData pRecordedData
+    {
+        get { return recordedData; }
+    }
+
     public UserDataManager()
     {
         currentPlayData = new UserData(true);
